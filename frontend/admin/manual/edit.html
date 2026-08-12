@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/shared.css">
+<link rel="stylesheet" href="../layout.html">
+<title>핸드오프 — 관리자</title>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="app-sidebar" id="sidebar"></aside>
+  <main class="app-main">
+<div class="main-head">
+  <div>
+    <h2>매뉴얼 편집</h2>
+    <p id="edit-subtitle">새 매뉴얼을 작성해요</p>
+  </div>
+</div>
+
+<div class="manual-edit-container">
+  <form class="edit-form">
+    <div class="field">
+      <label>제목 <span class="required">*</span></label>
+      <input type="text" id="edit-title" placeholder="매뉴얼 제목" required />
+    </div>
+
+    <div class="field">
+      <label>프로젝트 <span class="required">*</span></label>
+      <select id="edit-project" required>
+        <option value="">선택하세요</option>
+        <option value="cafe-mardi">카페 마르디 웹사이트</option>
+        <option value="studio-booking">스튜디오 예약 시스템</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>카테고리 <span class="required">*</span></label>
+      <select id="edit-category" required>
+        <option value="">선택하세요</option>
+        <option value="menu">메뉴 관리</option>
+        <option value="booking">예약</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>내용 <span class="required">*</span></label>
+      <textarea id="edit-content" placeholder="매뉴얼 내용을 입력하세요" style="min-height:400px;font-family:'Segoe UI', sans-serif;" required></textarea>
+    </div>
+
+    <div class="field">
+      <label>첨부파일</label>
+      <input type="file" id="edit-attachments" multiple />
+      <div id="attachment-preview" style="margin-top:0.5rem;"></div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" onclick="window.history.back()">취소</button>
+      <button type="submit" class="btn btn-primary">저장</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  fetch('../_sidebar.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('sidebar').innerHTML = html;
+    });
+</script>
+<script>
+  (function(){
+    var form = document.querySelector('.edit-form');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        // 매뉴얼 저장 로직
+        alert('매뉴얼이 저장되었습니다.');
+      });
+    }
+
+    var attachmentInput = document.getElementById('edit-attachments');
+    if (attachmentInput) {
+      attachmentInput.addEventListener('change', function(e) {
+        var preview = document.getElementById('attachment-preview');
+        preview.innerHTML = '';
+        Array.from(e.target.files).forEach(function(file) {
+          var div = document.createElement('div');
+          div.style.cssText = 'padding:0.5rem;border:1px solid var(--border);border-radius:4px;margin-top:0.25rem;font-size:12px;';
+          div.textContent = file.name + ' (' + (file.size / 1024).toFixed(2) + ' KB)';
+          preview.appendChild(div);
+        });
+      });
+    }
+  })();
+  </script>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/shared.css">
+<link rel="stylesheet" href="../layout.html">
+<title>핸드오프 — 관리자</title>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="app-sidebar" id="sidebar"></aside>
+  <main class="app-main">
+    <div class="main-head">
+      <div>
+        <h2>티켓</h2>
+        <p>모든 프로젝트를 통틀어 최근 등록순으로 정렬됩니다 · <span id="at-count">6</span>건</p>
+      </div>
+    </div>
+
+    <div class="view-tabs">
+      <button class="view-tab active" data-view="kanban">칸반</button>
+      <button class="view-tab" data-view="list">리스트</button>
+    </div>
+
+    <div class="filter-bar" id="at-status-filter">
+      <button class="toolbar-toggle-btn" id="ticket-mine-toggle" type="button">담당 프로젝트만 보기</button>
+      <div class="sort-dropdown" id="at-project-dropdown" style="display:none;">
+        <button class="sort-select" id="at-project-btn" type="button">담당 프로젝트 전체 ▾</button>
+        <div class="sort-menu" id="at-project-menu">
+          <button class="sort-option active" data-value="all">담당 프로젝트 전체</button>
+        </div>
+      </div>
+      <div class="sort-dropdown" id="at-status-dropdown">
+        <button class="sort-select" id="at-status-btn" type="button">상태 · 전체 ▾</button>
+        <div class="sort-menu" id="at-status-menu">
+          <button class="sort-option active" data-status="all">전체</button>
+          <button class="sort-option" data-status="접수">접수</button>
+          <button class="sort-option" data-status="진행중">진행중</button>
+          <button class="sort-option" data-status="확인 요청">확인 요청</button>
+          <button class="sort-option" data-status="완료">완료</button>
+        </div>
+      </div>
+      <label class="search-input"><img src="../../assets/svg/home/search.svg" alt="검색"> <input id="at-search" type="text" placeholder="티켓 번호, 제목 검색" style="border:none;background:none;font-family:inherit;font-size:13px;color:var(--ink);width:100%;outline:none;" /></label>
+    </div>
+
+    <div id="list-view" style="display:none;">
+      <div class="proj-table-wrap">
+        <div class="proj-table-scroll">
+          <table class="proj-table">
+            <thead>
+              <tr><th>ID</th><th>상태</th><th>제목</th><th>프로젝트</th><th>담당자</th><th>생성 날짜</th></tr>
+            </thead>
+            <tbody id="at-rows">
+              <tr class="clickable-row nav-link" data-tab="ticket" data-project="카페 마르디 웹사이트" data-status="접수">
+                <td class="tid">#016</td><td><span class="status-chip"><span class="dot dot-open"></span>접수</span></td><td class="ft-title">모바일에서 메뉴 안 열리는 문제</td><td class="ft-project">카페 마르디 웹사이트</td><td class="ft-assignee">-</td><td class="ft-date">7월 24일</td>
+              </tr>
+            <tr class="clickable-row nav-link" data-tab="ticket" data-project="스튜디오 예약 시스템" data-status="진행중">
+              <td class="tid">#015</td><td><span class="status-chip"><span class="dot dot-progress"></span>진행중</span></td><td class="ft-title">예약 폼에 전화번호 필드 추가</td><td class="ft-project">스튜디오 예약 시스템</td><td class="ft-assignee">이서연</td><td class="ft-date">7월 23일</td></td>
+            </tr>
+            <tr class="clickable-row nav-link" data-tab="ticket" data-project="브런치 카페 소보로" data-status="확인 요청">
+              <td class="tid">#013</td><td><span class="status-chip"><span class="dot dot-review"></span>확인 요청</span></td><td class="ft-title">브런치 메뉴 사진 3장 교체</td><td class="ft-project">브런치 카페 소보로</td><td class="ft-assignee">정하늘</td><td class="ft-date">7월 22일</td>
+            </tr>
+            <tr class="clickable-row nav-link" data-tab="ticket" data-project="카페 마르디 웹사이트" data-status="완료">
+              <td class="tid">#014</td><td><span class="status-chip"><span class="dot dot-done"></span>완료</span></td><td class="ft-title">메인 배너 문구 오타 수정</td><td class="ft-project">카페 마르디 웹사이트</td><td class="ft-assignee">차민지</td><td class="ft-date">7월 22일</td>
+            </tr>
+            <tr class="clickable-row nav-link" data-tab="ticket" data-project="스튜디오 예약 시스템" data-status="완료">
+              <td class="tid">#012</td><td><span class="status-chip"><span class="dot dot-done"></span>완료</span></td><td class="ft-title">예약 확정 문자 문구 수정</td><td class="ft-project">스튜디오 예약 시스템</td><td class="ft-assignee">이서연</td><td class="ft-date">7월 19일</td></td>
+            </tr>
+            <tr class="clickable-row nav-link" data-tab="ticket" data-project="필라테스 스튜디오 예약" data-status="완료">
+              <td class="tid">#011</td><td><span class="status-chip"><span class="dot dot-done"></span>완료</span></td><td class="ft-title">인스타그램 링크 아이콘 추가</td><td class="ft-project">필라테스 스튜디오 예약</td><td class="ft-assignee">이서연</td><td class="ft-date">7월 17일</td></td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="ft-empty" id="at-empty" style="display:none;">검색 조건에 맞는 티켓이 없어요</div>
+    </div>
+
+    <div id="kanban-view">
+      <div class="kanban-board">
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">접수</span>
+            <span class="kanban-count" data-status="접수">0</span>
+          </div>
+          <div class="kanban-cards" data-status="접수"></div>
+        </div>
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">진행중</span>
+            <span class="kanban-count" data-status="진행중">0</span>
+          </div>
+          <div class="kanban-cards" data-status="진행중"></div>
+        </div>
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">확인 요청</span>
+            <span class="kanban-count" data-status="확인 요청">0</span>
+          </div>
+          <div class="kanban-cards" data-status="확인 요청"></div>
+        </div>
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">완료</span>
+            <span class="kanban-count" data-status="완료">0</span>
+          </div>
+          <div class="kanban-cards" data-status="완료"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="../_sidebar-toggle.js"></script>
+<script>
+  fetch('../_sidebar.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('sidebar').innerHTML = html;
+      // 현재 페이지에 해당하는 nav-item active 처리
+      var navItems = document.querySelectorAll('#sidebar .nav-item, #sidebar .nav-subitem');
+      navItems.forEach(function(item){
+        var href = item.getAttribute('onclick');
+        if (href && href.includes('ticket/list.html')) {
+          item.classList.add('active');
+        }
+      });
+      // 토글 기능 초기화
+      initializeSidebarToggle(false);
+    });
+</script>
+<script>
+  (function(){
+    var filterChips = document.querySelectorAll('#at-status-filter .filter-chip');
+    var ticketRows = document.querySelectorAll('#at-rows tr');
+    var atSearch = document.getElementById('at-search');
+    var atMineToggle = document.getElementById('ticket-mine-toggle');
+    var atProjectDropdown = document.getElementById('at-project-dropdown');
+    var atProjectBtn = document.getElementById('at-project-btn');
+    var atProjectMenu = document.getElementById('at-project-menu');
+    var atEmpty = document.getElementById('at-empty');
+    var currentStatus = 'all';
+    var atMineOnly = false;
+    var currentProject = 'all';
+
+    // 티켓 행 클릭 이벤트
+    ticketRows.forEach(function(row){
+      row.addEventListener('click', function(){
+        var tid = row.querySelector('.tid').textContent.trim();
+        location.href = './detail.html?id=' + tid;
+      });
+    });
+
+    // 담당 프로젝트 드롭다운 옵션 생성
+    var projects = new Set();
+    ticketRows.forEach(function(row){
+      var project = row.dataset.project;
+      if (project) projects.add(project);
+    });
+    projects.forEach(function(project){
+      var btn = document.createElement('button');
+      btn.className = 'sort-option';
+      btn.setAttribute('data-value', project);
+      btn.textContent = project;
+      atProjectMenu.appendChild(btn);
+    });
+
+    function applyTicketFilters(){
+      var visibleCount = 0;
+      ticketRows.forEach(function(row){
+        var rowStatus = row.dataset.status;
+        var rowProject = row.dataset.project;
+        var statusMatch = currentStatus === 'all' || rowStatus === currentStatus;
+        var projectMatch = !atMineOnly || currentProject === 'all' || rowProject === currentProject;
+        var searchMatch = !atSearch || atSearch.value.trim() === '' || row.textContent.toLowerCase().includes(atSearch.value.trim().toLowerCase());
+        var show = statusMatch && projectMatch && searchMatch;
+        row.style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+      if (atEmpty) {
+        atEmpty.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    }
+
+    var statusBtn = document.getElementById('at-status-btn');
+    var statusOptions = document.querySelectorAll('#at-status-menu .sort-option');
+
+    if (statusBtn) {
+      statusBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        statusDropdown.classList.toggle('open');
+      });
+      statusOptions.forEach(function(opt){
+        opt.addEventListener('click', function(){
+          statusOptions.forEach(function(o){ o.classList.remove('active'); });
+          opt.classList.add('active');
+          currentStatus = opt.dataset.status;
+          statusBtn.textContent = '상태 · ' + opt.textContent + ' ▾';
+          statusDropdown.classList.remove('open');
+          applyTicketFilters();
+        });
+      });
+    }
+
+    if (atSearch) {
+      atSearch.addEventListener('input', applyTicketFilters);
+    }
+
+    if (atMineToggle) {
+      atMineToggle.addEventListener('click', function(){
+        atMineOnly = !atMineOnly;
+        atMineToggle.classList.toggle('active');
+        if (atProjectDropdown) {
+          atProjectDropdown.style.display = atMineOnly ? '' : 'none';
+        }
+        applyTicketFilters();
+      });
+    }
+
+    // 프로젝트 드롭다운 처리
+    if (atProjectBtn && atProjectMenu) {
+      atProjectBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        atProjectDropdown.classList.toggle('open');
+      });
+
+      var projectOptions = atProjectMenu.querySelectorAll('.sort-option');
+      projectOptions.forEach(function(opt){
+        opt.addEventListener('click', function(){
+          projectOptions.forEach(function(o){ o.classList.remove('active'); });
+          opt.classList.add('active');
+          currentProject = opt.getAttribute('data-value');
+          atProjectBtn.textContent = opt.textContent + ' ▾';
+          applyTicketFilters();
+          atProjectDropdown.classList.remove('open');
+        });
+      });
+    }
+
+    // 드롭다운 외부 클릭 시 닫기
+    document.addEventListener('click', function(){
+      if (atProjectDropdown) atProjectDropdown.classList.remove('open');
+    });
+
+    // 뷰 토글 기능
+    var viewTabs = document.querySelectorAll('.view-tabs .view-tab');
+    var listView = document.getElementById('list-view');
+    var kanbanView = document.getElementById('kanban-view');
+
+    var statusDropdown = document.getElementById('at-status-dropdown');
+    viewTabs.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        viewTabs.forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        if (btn.dataset.view === 'list') {
+          listView.style.display = '';
+          kanbanView.style.display = 'none';
+          statusDropdown.style.display = '';
+        } else {
+          listView.style.display = 'none';
+          kanbanView.style.display = '';
+          statusDropdown.style.display = 'none';
+          renderKanbanBoard();
+        }
+      });
+    });
+
+    // 초기 로드 시 상태 필터 숨김 (칸반이 기본값)
+    if (statusDropdown) {
+      statusDropdown.style.display = 'none';
+    }
+
+    // 초기 로드 시 칸반 보드 렌더링
+    renderKanbanBoard();
+
+    var draggedCard = null;
+
+    function renderKanbanBoard(){
+      var statuses = ['접수', '진행중', '확인 요청', '완료'];
+      statuses.forEach(function(status){
+        var column = document.querySelector('.kanban-cards[data-status="' + status + '"]');
+        var count = document.querySelector('.kanban-count[data-status="' + status + '"]');
+        column.innerHTML = '';
+        var statusTickets = [];
+
+        ticketRows.forEach(function(row){
+          if (row.style.display !== 'none' && row.dataset.status === status) {
+            statusTickets.push(row);
+          }
+        });
+
+        count.textContent = statusTickets.length;
+
+        statusTickets.forEach(function(row){
+          var card = document.createElement('div');
+          card.className = 'kanban-card';
+          card.draggable = true;
+          card.dataset.tid = row.querySelector('.tid').textContent.trim();
+          var tid = row.querySelector('.tid').textContent;
+          var title = row.querySelector('.ft-title').textContent;
+          var project = row.querySelector('.ft-project').textContent;
+          var assignee = row.querySelector('.ft-assignee').textContent || '-';
+          var date = row.querySelector('.ft-date').textContent;
+
+          card.innerHTML = '<div class="kanban-card-id">' + tid + '</div><div class="kanban-card-title">' + title + '</div><div class="kanban-card-meta">' + project + '</div><div class="kanban-card-footer"><span class="kanban-card-assignee">' + assignee + '</span><span class="kanban-card-date">' + date + '</span></div>';
+
+          card.addEventListener('dragstart', function(){
+            draggedCard = card;
+            card.classList.add('dragging');
+          });
+
+          card.addEventListener('dragend', function(){
+            card.classList.remove('dragging');
+            draggedCard = null;
+          });
+
+          card.addEventListener('click', function(e){
+            if (e.target.closest('.kanban-card-id, .kanban-card-title, .kanban-card-meta, .kanban-card-footer')) {
+              location.href = './detail.html?id=' + card.dataset.tid;
+            }
+          });
+
+          column.appendChild(card);
+        });
+
+        // 컬럼 드롭 이벤트
+        column.addEventListener('dragover', function(e){
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+        });
+
+        column.addEventListener('drop', function(e){
+          e.preventDefault();
+          if (draggedCard) {
+            var tid = draggedCard.dataset.tid;
+            var targetStatus = column.dataset.status;
+            var ticketRow = Array.from(ticketRows).find(function(row){
+              return row.querySelector('.tid').textContent.trim() === tid;
+            });
+
+            if (ticketRow && ticketRow.dataset.status !== targetStatus) {
+              ticketRow.dataset.status = targetStatus;
+              renderKanbanBoard();
+            }
+          }
+        });
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

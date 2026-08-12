@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/shared.css">
+<title>핸드오프 — 관리자</title>
+</head>
+<body>
+<div class="tab-panel" id="panel-invite">
+  <div class="tab-panel-wrapper">
+    <div class="auth-shell">
+      <div class="auth-card">
+        <div class="brand"><span class="brand-mark"></span>Handoff</div>
+        <span class="auth-invite-badge">김도윤님이 팀원으로 초대했어요</span>
+        <h2>정하늘님, 환영해요</h2>
+        <p class="auth-sub">비밀번호만 설정하면 바로 시작할 수 있어요</p>
+        <div class="auth-field">
+          <label>이메일</label>
+          <input type="text" value="haneul@handoff.dev" readonly />
+        </div>
+        <div class="auth-field">
+          <label>비밀번호 설정</label>
+          <input type="password" placeholder="8자 이상 입력하세요" />
+        </div>
+        <button class="btn btn-primary auth-submit nav-link" data-tab="dash">시작하기</button>
+      </div>
+  </div>
+</div>
+<script>
+(function(){
+  var CURRENT_USER_NAME = '차민지';
+  var PROJECT_ASSIGNEE = {
+    '카페 마르디 웹사이트': '차민지',
+    '스튜디오 예약 시스템': '이서연',
+    '브런치 카페 소보로': '정하늘',
+    '필라테스 스튜디오 예약': '이서연',
+    '쇼핑몰 리뉴얼': '정하늘',
+    '포트폴리오 사이트': '이서연',
+    '동네 세탁소 예약 폼': '정하늘',
+    '독립 서점 홈페이지': '이서연',
+    '요가원 회원관리': '정하늘',
+    '디자인 스튜디오 소개 페이지': '이서연'
+  };
+  function getMyProjectNames(){
+    return Object.keys(PROJECT_ASSIGNEE).filter(function(name){
+      return PROJECT_ASSIGNEE[name] === CURRENT_USER_NAME;
+    });
+  }
+  var categoryData = {
+    'cafe-mardi': [
+      { name: '메뉴 관리', count: 1 },
+      { name: '예약', count: 0 },
+      { name: '공지사항', count: 2 },
+      { name: '갤러리', count: 1 },
+      { name: '계정·설정', count: 3 }
+    ],
+    'studio-booking': [
+      { name: '예약', count: 3 },
+      { name: '환불·취소', count: 1 },
+      { name: '강사 관리', count: 1 }
+    ],
+    'shop-renewal': [
+      { name: '상품 관리', count: 2 },
+      { name: '배송', count: 1 },
+      { name: '결제', count: 0 },
+      { name: '계정·설정', count: 1 }
+    ]
+  };
+
+  var tabs = document.querySelectorAll('.tab-btn');
+  var panels = {
+    home: document.getElementById('panel-home'),
+    attention: document.getElementById('panel-attention'),
+    dash: document.getElementById('panel-dash'),
+    alltickets: document.getElementById('panel-alltickets'),
+    allmanuals: document.getElementById('panel-allmanuals'),
+    manualedit: document.getElementById('panel-manualedit'),
+    manualview: document.getElementById('panel-manualview'),
+    settings: document.getElementById('panel-settings'),
+    login: document.getElementById('panel-login'),
+    invite: document.getElementById('panel-invite'),
+    categories: document.getElementById('panel-categories'),
+    team: document.getElementById('panel-team'),
+    teammember: document.getElementById('panel-teammember'),
+    projdetail: document.getElementById('panel-projdetail'),
+    portal: document.getElementById('panel-portal'),
+    manual: document.getElementById('panel-manual'),
+    clientmanuals: document.getElementById('panel-clientmanuals'),
+    clienttickets: document.getElementById('panel-clienttickets'),
+    clientaccount: document.getElementById('panel-clientaccount'),
+    form: document.getElementById('panel-form'),
+    ticket: document.getElementById('panel-ticket'),
+    ticketclient: document.getElementById('panel-ticketclient'),
+    slack: document.getElementById('panel-slack')
+  };
+  function goToTab(key){
+    tabs.forEach(function(b){ b.classList.remove('active'); });
+    Object.values(panels).forEach(function(p){ p.classList.remove('active'); });
+    var matchBtn = document.querySelector('.tab-btn[data-tab="' + key + '"]');
+    if (matchBtn) matchBtn.classList.add('active');
+    panels[key].classList.add('active');
+  }
+  tabs.forEach(function(btn){
+    btn.addEventListener('click', function(){ goToTab(btn.dataset.tab); });
+  });
+  document.querySelectorAll('.nav-link').forEach(function(link){
+    link.style.cursor = 'pointer';
+    link.addEventListener('click', function(){ goToTab(link.dataset.tab); });
+  });
+
+  if (window.location.hash) {
+    var hashKey = window.location.hash.replace('#tab=', '').replace('#', '');
+    if (panels[hashKey]) goToTab(hashKey);
+  }
+
+  var previewBtn = document.getElementById('btn-preview-manual');
+  if (previewBtn) {
+    previewBtn.addEventListener('click', function(){
+      var url = window.location.href.split('#')[0] + '#tab=manual';
+      window.open(url, '_blank');
+    });
+  }
+
+  var demoToggleBtns = document.querySelectorAll('.demo-toggle-btn');
+  var pdBadge = document.getElementById('pd-ticket-badge');
+  var pdClearBanner = document.getElementById('pd-clear-banner');
+  var pdRow016 = document.getElementById('pd-row-016');
+  var pdRow015 = document.getElementById('pd-row-015');
+  demoToggleBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      demoToggleBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      if (btn.dataset.state === 'clear') {
+        pdBadge.innerHTML = '<span class="badge-cleared">✓ 모두 완료</span>';
+        pdClearBanner.style.display = 'flex';
+        pdRow016.querySelector('.pd-status').innerHTML = '<span class="dot dot-done"></span>완료';
+        pdRow015.querySelector('.pd-status').innerHTML = '<span class="dot dot-done"></span>완료';
+      } else {
+        pdBadge.textContent = '2건 미해결';
+        pdClearBanner.style.display = 'none';
+        pdRow016.querySelector('.pd-status').innerHTML = '<span class="dot dot-open"></span>접수';
+        pdRow015.querySelector('.pd-status').innerHTML = '<span class="dot dot-progress"></span>진행중';
+      }
+    });
+  });
+
+  var atSearch = document.getElementById('at-search');
+  var atStatusChips = document.querySelectorAll('#at-status-filter .filter-chip');
+  var atRows = document.querySelectorAll('#at-rows .full-ticket-row');
+  var atEmpty = document.getElementById('at-empty');
+  var atCount = document.getElementById('at-count');
+  var atCurrentStatus = 'all';
+  var atMineToggle = document.getElementById('ticket-mine-toggle');
+  var atMineProjectFilter = document.getElementById('at-mine-project-filter');
+  var atMineOnly = false;
+
+  function applyTicketFilters(){
+    var query = atSearch.value.trim().toLowerCase();
+    var mineProject = atMineOnly ? atMineProjectFilter.value : 'all';
+    var visible = 0;
+    atRows.forEach(function(row){
+      var title = row.querySelector('.ft-title').textContent.toLowerCase();
+      var ticketId = row.querySelector('.tid').textContent.toLowerCase().replace('#', '');
+      var proj = row.dataset.project;
+      var status = row.dataset.status;
+      var normalizedQuery = query.replace('#', '');
+      var matchesQuery = !query || title.indexOf(query) !== -1 || ticketId.indexOf(normalizedQuery) !== -1;
+      var matchesStatus = atCurrentStatus === 'all' || status === atCurrentStatus;
+      var matchesMine = !atMineOnly || PROJECT_ASSIGNEE[proj] === CURRENT_USER_NAME;
+      var matchesMineProject = mineProject === 'all' || proj === mineProject;
+      var show = matchesQuery && matchesStatus && matchesMine && matchesMineProject;
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    atCount.textContent = visible;
+    atEmpty.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  if (atSearch) {
+    atSearch.addEventListener('input', applyTicketFilters);
+    if (atMineToggle) {
+      atMineToggle.addEventListener('click', function(){
+        atMineOnly = atMineToggle.classList.toggle('active');
+        if (atMineProjectFilter) {
+          if (atMineOnly) {
+            var myProjects = getMyProjectNames();
+            atMineProjectFilter.innerHTML = '<option value="all">담당 프로젝트 전체</option>' +
+              myProjects.map(function(name){ return '<option value="' + name + '">' + name + '</option>'; }).join('');
+            atMineProjectFilter.value = 'all';
+            atMineProjectFilter.style.display = myProjects.length > 1 ? '' : 'none';
+          } else {
+            atMineProjectFilter.style.display = 'none';
+            atMineProjectFilter.value = 'all';
+          }
+        }
+        applyTicketFilters();
+      });
+    }
+    if (atMineProjectFilter) {
+      atMineProjectFilter.addEventListener('change', applyTicketFilters);
+    }
+    atStatusChips.forEach(function(chip){
+      chip.addEventListener('click', function(){
+        atStatusChips.forEach(function(c){ c.classList.remove('picked'); });
+        chip.classList.add('picked');
+        atCurrentStatus = chip.dataset.status;
+        applyTicketFilters();
+      });
+    });
+  }
+
+  var amSearch = document.getElementById('am-search');
+  var amRows = document.querySelectorAll('#am-rows .full-manual-row');
+  var amEmpty = document.getElementById('am-empty');
+  var amCount = document.getElementById('am-count');
+  var amMineToggle = document.getElementById('manual-mine-toggle');
+  var amMineProjectFilter = document.getElementById('am-mine-project-filter');
+  var amMineOnly = false;
+
+  function applyManualFilters(){
+    var query = amSearch.value.trim().toLowerCase();
+    var mineProject = amMineOnly ? amMineProjectFilter.value : 'all';
+    var visible = 0;
+    amRows.forEach(function(row){
+      var title = row.querySelector('.fm-title').textContent.toLowerCase();
+      var proj = row.dataset.project;
+      var matchesQuery = !query || title.indexOf(query) !== -1;
+      var matchesMine = !amMineOnly || PROJECT_ASSIGNEE[proj] === CURRENT_USER_NAME;
+      var matchesMineProject = mineProject === 'all' || proj === mineProject;
+      var show = matchesQuery && matchesMine && matchesMineProject;
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    amCount.textContent = visible;
+    amEmpty.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  if (amSearch) {
+    amSearch.addEventListener('input', applyManualFilters);
+  }
+  if (amMineToggle) {
+    amMineToggle.addEventListener('click', function(){
+      amMineOnly = amMineToggle.classList.toggle('active');
+      if (amMineProjectFilter) {
+        if (amMineOnly) {
+          var myProjects = getMyProjectNames();
+          amMineProjectFilter.innerHTML = '<option value="all">담당 프로젝트 전체</option>' +
+            myProjects.map(function(name){ return '<option value="' + name + '">' + name + '</option>'; }).join('');
+          amMineProjectFilter.value = 'all';
+          amMineProjectFilter.style.display = myProjects.length > 1 ? '' : 'none';
+        } else {
+          amMineProjectFilter.style.display = 'none';
+          amMineProjectFilter.value = 'all';
+        }
+      }
+      applyManualFilters();
+    });
+  }
+  if (amMineProjectFilter) {
+    amMineProjectFilter.addEventListener('change', applyManualFilters);
+  }
+
+  var catList = document.getElementById('category-list');
+  var catNewInput = document.getElementById('cat-new-input');
+  var catAddBtn = document.getElementById('cat-add-btn');
+  var catProjectSelect = document.getElementById('cat-project-select');
+
+  function renderCategoryRow(cat){
+    var row = document.createElement('div');
+    row.className = 'category-row';
+    row.innerHTML = '<span class="category-name">' + cat.name + '</span><span class="category-count">매뉴얼 ' + cat.count + '개</span><button class="category-remove">삭제</button>';
+    row.querySelector('.category-remove').addEventListener('click', function(){ row.remove(); });
+    return row;
+  }
+
+  function renderCategoryList(projectKey){
+    if (!catList) return;
+    catList.innerHTML = '';
+    (categoryData[projectKey] || []).forEach(function(cat){
+      catList.appendChild(renderCategoryRow(cat));
+    });
+  }
+
+  if (catProjectSelect) {
+    renderCategoryList(catProjectSelect.value);
+    catProjectSelect.addEventListener('change', function(){
+      renderCategoryList(catProjectSelect.value);
+    });
+    catAddBtn.addEventListener('click', function(){
+      var name = catNewInput.value.trim();
+      if (!name) return;
+      catList.appendChild(renderCategoryRow({ name: name, count: 0 }));
+      catNewInput.value = '';
+    });
+  }
+
+  var teamRoleToggleBtns = document.querySelectorAll('#panel-team .demo-toggle-btn');
+  var teamViewerNote = document.getElementById('team-viewer-note');
+  var teamViewDesc = document.getElementById('team-view-desc');
+  var teamInviteBtn = document.getElementById('team-invite-btn');
+  var teamMemberRows = document.querySelectorAll('.team-member-row');
+  teamRoleToggleBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      teamRoleToggleBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var isMember = btn.dataset.teamRole === 'member';
+      teamViewerNote.style.display = isMember ? 'block' : 'none';
+      teamInviteBtn.style.display = isMember ? 'none' : '';
+      teamViewDesc.textContent = isMember
+        ? '나에게 할당된 프로젝트 4개를 담당하고 있어요'
+        : '대표 관리자만 팀원을 초대하고 프로젝트를 할당할 수 있어요';
+      teamMemberRows.forEach(function(row){
+        var isMe = row.querySelector('.team-me-tag');
+        row.classList.toggle('member-view-locked', isMember && !isMe);
+      });
+    });
+  });
+
+  var assignCheckboxes = document.querySelectorAll('#assign-list input[type="checkbox"]');
+  var assignCount = document.getElementById('assign-count');
+  if (assignCheckboxes.length) {
+    assignCheckboxes.forEach(function(box){
+      box.addEventListener('change', function(){
+        var checked = 0;
+        assignCheckboxes.forEach(function(b){ if (b.checked) checked++; });
+        assignCount.textContent = checked;
+      });
+    });
+  }
+
+  var attnChips = document.querySelectorAll('#attn-type-filter .filter-chip');
+  var attnRows = document.querySelectorAll('#attn-rows .attn-row');
+  var attnCount = document.getElementById('attn-count');
+  var attnEmpty = document.getElementById('attn-empty');
+  if (attnChips.length) {
+    attnChips.forEach(function(chip){
+      chip.addEventListener('click', function(){
+        attnChips.forEach(function(c){ c.classList.remove('picked'); });
+        chip.classList.add('picked');
+        var type = chip.dataset.atype;
+        var visible = 0;
+        attnRows.forEach(function(row){
+          var show = type === 'all' || row.dataset.atype === type;
+          row.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+        attnCount.textContent = visible;
+        attnEmpty.style.display = visible === 0 ? 'block' : 'none';
+      });
+    });
+  }
+
+  var clientReqTabs = document.querySelectorAll('.client-req-tab');
+  var clientReqPanels = document.querySelectorAll('.client-req-panel');
+  clientReqTabs.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      clientReqTabs.forEach(function(b){ b.classList.remove('active'); });
+      clientReqPanels.forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('reqtab-' + btn.dataset.reqtab).classList.add('active');
+    });
+  });
+
+  var subtabBtns = document.querySelectorAll('.subtab-btn');
+  var subpanels = document.querySelectorAll('.subpanel');
+  subtabBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      subtabBtns.forEach(function(b){ b.classList.remove('active'); });
+      subpanels.forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('sub-' + btn.dataset.sub).classList.add('active');
+    });
+  });
+
+  var viewBtns = document.querySelectorAll('.view-tabs .view-tab');
+  var gridView = document.getElementById('proj-grid-view');
+  var listView = document.getElementById('proj-list-view');
+  viewBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      viewBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      if (btn.dataset.view === 'grid') {
+        gridView.style.display = '';
+        listView.style.display = 'none';
+      } else {
+        gridView.style.display = 'none';
+        listView.style.display = '';
+      }
+    });
+  });
+
+  var sortDropdown = document.getElementById('proj-sort-dropdown');
+  var sortBtn = document.getElementById('proj-sort-btn');
+  var sortLabel = document.getElementById('proj-sort-label');
+  var sortOptions = sortDropdown ? sortDropdown.querySelectorAll('.sort-option') : [];
+  var projGridList = document.getElementById('proj-grid-list');
+  var projListBody = document.getElementById('proj-list-body');
+
+  var sortKeyMap = { open: 'data-open', date: 'data-date', name: 'data-name' };
+
+  function sortProjects(key){
+    [projGridList, projListBody].forEach(function(container){
+      if (!container) return;
+      var items = Array.prototype.slice.call(container.children);
+      items.sort(function(a, b){
+        if (key === 'name') {
+          return a.getAttribute('data-name').localeCompare(b.getAttribute('data-name'), 'ko');
+        }
+        var av = Number(a.getAttribute(sortKeyMap[key]));
+        var bv = Number(b.getAttribute(sortKeyMap[key]));
+        return bv - av;
+      });
+      items.forEach(function(item){ container.appendChild(item); });
+    });
+  }
+
+  if (sortBtn) {
+    sortBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      sortDropdown.classList.toggle('open');
+    });
+    sortOptions.forEach(function(opt){
+      opt.addEventListener('click', function(){
+        sortOptions.forEach(function(o){ o.classList.remove('active'); });
+        opt.classList.add('active');
+        sortLabel.textContent = opt.textContent;
+        sortProjects(opt.dataset.sort);
+        sortDropdown.classList.remove('open');
+      });
+    });
+  }
+
+  var mineToggle = document.getElementById('proj-mine-toggle');
+  if (mineToggle) {
+    mineToggle.addEventListener('click', function(){
+      var active = mineToggle.classList.toggle('active');
+      [projGridList, projListBody].forEach(function(container){
+        if (!container) return;
+        Array.prototype.forEach.call(container.children, function(item){
+          var mine = item.getAttribute('data-assignee') === CURRENT_USER_NAME;
+          item.style.display = (active && !mine) ? 'none' : '';
+        });
+      });
+    });
+  }
+
+  var statusDropdown = document.getElementById('ticket-status-dropdown');
+  var statusBtn = document.getElementById('ticket-status-btn');
+  var statusDot = document.getElementById('ticket-status-dot');
+  var statusLabel = document.getElementById('ticket-status-label');
+  var statusOptions = statusDropdown ? statusDropdown.querySelectorAll('.status-option') : [];
+  var reopenNote = document.getElementById('ticket-reopen-note');
+  var ticketAssigneeLabel = document.getElementById('ticket-assignee-label');
+
+  if (statusBtn) {
+    statusBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      statusDropdown.classList.toggle('open');
+    });
+    statusOptions.forEach(function(opt){
+      opt.addEventListener('click', function(){
+        statusOptions.forEach(function(o){ o.classList.remove('active'); });
+        opt.classList.add('active');
+        statusDot.className = 'dot dot-' + opt.dataset.status;
+        statusLabel.textContent = opt.dataset.label;
+        statusDropdown.classList.remove('open');
+        if (reopenNote) reopenNote.style.display = opt.dataset.status === 'done' ? 'block' : 'none';
+        if (ticketAssigneeLabel) {
+          if (opt.dataset.status === 'open') {
+            ticketAssigneeLabel.classList.add('pending');
+            ticketAssigneeLabel.textContent = '담당자 확인 중';
+          } else {
+            ticketAssigneeLabel.classList.remove('pending');
+            ticketAssigneeLabel.textContent = '담당 · ' + CURRENT_USER_NAME;
+          }
+        }
+      });
+    });
+  }
+
+  var cmSortDropdown = document.getElementById('cm-sort-dropdown');
+  var cmSortBtn = document.getElementById('cm-sort-btn');
+  var cmSortLabel = document.getElementById('cm-sort-label');
+  var cmSortOptions = cmSortDropdown ? cmSortDropdown.querySelectorAll('.sort-option') : [];
+  var cmSearch = document.getElementById('cm-search');
+  var cmCategoryFilter = document.getElementById('cm-category-filter');
+  var cmList = document.getElementById('cm-list');
+  var cmEmpty = document.getElementById('cm-empty');
+  var cmCount = document.getElementById('cm-count');
+  var cmSortKeyMap = { views: 'data-views', date: 'data-date', name: 'data-name' };
+  var cmCurrentSort = 'views';
+
+  function sortClientManuals(key){
+    if (!cmList) return;
+    var items = Array.prototype.slice.call(cmList.children);
+    items.sort(function(a, b){
+      if (key === 'name') {
+        return a.getAttribute('data-name').localeCompare(b.getAttribute('data-name'), 'ko');
+      }
+      var av = Number(a.getAttribute(cmSortKeyMap[key]));
+      var bv = Number(b.getAttribute(cmSortKeyMap[key]));
+      return bv - av;
+    });
+    items.forEach(function(item){ cmList.appendChild(item); });
+  }
+
+  function filterClientManuals(){
+    var query = cmSearch.value.trim().toLowerCase();
+    var category = cmCategoryFilter.value;
+    var visible = 0;
+    Array.prototype.forEach.call(cmList.children, function(item){
+      var name = item.getAttribute('data-name').toLowerCase();
+      var cat = item.getAttribute('data-category');
+      var matchesQuery = !query || name.indexOf(query) !== -1;
+      var matchesCategory = category === 'all' || cat === category;
+      var show = matchesQuery && matchesCategory;
+      item.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    cmCount.textContent = visible;
+    cmEmpty.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  if (cmSortBtn) {
+    cmSortBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      cmSortDropdown.classList.toggle('open');
+    });
+    cmSortOptions.forEach(function(opt){
+      opt.addEventListener('click', function(){
+        cmSortOptions.forEach(function(o){ o.classList.remove('active'); });
+        opt.classList.add('active');
+        cmSortLabel.textContent = opt.textContent;
+        cmCurrentSort = opt.dataset.sort;
+        sortClientManuals(cmCurrentSort);
+        cmSortDropdown.classList.remove('open');
+      });
+    });
+    cmSearch.addEventListener('input', filterClientManuals);
+    cmCategoryFilter.addEventListener('change', filterClientManuals);
+  }
+
+  document.addEventListener('click', function(){
+    if (sortDropdown) sortDropdown.classList.remove('open');
+    if (statusDropdown) statusDropdown.classList.remove('open');
+    if (cmSortDropdown) cmSortDropdown.classList.remove('open');
+  });
+
+  var reviewBanner = document.querySelector('.review-banner');
+  var clientStatusChip = document.querySelector('#panel-ticketclient .td-head .status-chip');
+  var approveBtn = document.getElementById('btn-approve-ticket');
+  var revisionBtn = document.getElementById('btn-request-revision');
+  var clientReplyInput = document.getElementById('client-reply-input');
+
+  if (approveBtn) {
+    approveBtn.addEventListener('click', function(){
+      clientStatusChip.innerHTML = '<span class="dot dot-done"></span>완료';
+      reviewBanner.style.display = 'none';
+    });
+  }
+  if (revisionBtn) {
+    revisionBtn.addEventListener('click', function(){
+      clientStatusChip.innerHTML = '<span class="dot dot-progress"></span>진행중';
+      reviewBanner.style.display = 'none';
+      clientReplyInput.disabled = false;
+      clientReplyInput.placeholder = '어느 부분을 다시 고쳐야 할지 적어주세요...';
+      clientReplyInput.focus();
+    });
+  }
+})();
+</script>
+</body>
+</html>

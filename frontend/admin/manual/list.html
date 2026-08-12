@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/shared.css">
+<link rel="stylesheet" href="../layout.html">
+<title>핸드오프 — 관리자</title>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="app-sidebar" id="sidebar"></aside>
+  <main class="app-main">
+<div class="main-head">
+  <div>
+    <h2>매뉴얼</h2>
+    <p>모든 프로젝트의 매뉴얼을 관리해요</p>
+  </div>
+  <button class="btn btn-primary">+ 새 매뉴얼</button>
+</div>
+
+<div class="dash-toolbar">
+  <button class="toolbar-toggle-btn" id="manual-mine-toggle" type="button">담당 프로젝트만 보기</button>
+  <select class="sort-select" id="am-mine-project-filter" style="display:none;">
+    <option value="all">담당 프로젝트 전체</option>
+  </select>
+  <label class="search-input">검색 <input id="am-search" type="text" placeholder="매뉴얼 제목 검색" style="border:none;background:none;font-family:inherit;font-size:13px;color:var(--ink);width:100%;outline:none;" /></label>
+</div>
+
+<div id="am-rows" class="full-manual-list">
+  <!-- 매뉴얼 행이 여기 추가됨 -->
+</div>
+
+<div id="am-empty" class="empty-state" style="display:none;">
+  <p>매뉴얼이 없어요</p>
+</div>
+
+<script>
+  fetch('../_sidebar.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('sidebar').innerHTML = html;
+    });
+</script>
+<script>
+  (function(){
+    var CURRENT_USER_NAME = '차민지';
+    var PROJECT_ASSIGNEE = {
+      '카페 마르디 웹사이트': '차민지'
+    };
+
+    var amSearch = document.getElementById('am-search');
+    var amRows = document.querySelectorAll('#am-rows .full-manual-row');
+    var amEmpty = document.getElementById('am-empty');
+    var amMineToggle = document.getElementById('manual-mine-toggle');
+    var amMineProjectFilter = document.getElementById('am-mine-project-filter');
+    var amMineOnly = false;
+
+    function applyManualFilters(){
+      var query = amSearch.value.trim().toLowerCase();
+      var visible = 0;
+      amRows.forEach(function(row){
+        var title = row.querySelector('.fm-title') ? row.querySelector('.fm-title').textContent.toLowerCase() : '';
+        var proj = row.dataset.project;
+        var matchesQuery = !query || title.indexOf(query) !== -1;
+        var matchesMine = !amMineOnly || PROJECT_ASSIGNEE[proj] === CURRENT_USER_NAME;
+        var show = matchesQuery && matchesMine;
+        row.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      amEmpty.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    if (amSearch) {
+      amSearch.addEventListener('input', applyManualFilters);
+    }
+
+    if (amMineToggle) {
+      amMineToggle.addEventListener('click', function(){
+        amMineOnly = amMineToggle.classList.toggle('active');
+        applyManualFilters();
+      });
+    }
+
+    if (amMineProjectFilter) {
+      amMineProjectFilter.addEventListener('change', applyManualFilters);
+    }
+  })();
+  </script>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/shared.css">
+<link rel="stylesheet" href="../layout.html">
+<title>핸드오프 — 관리자</title>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="app-sidebar" id="sidebar"></aside>
+  <main class="app-main">
+<div class="main-head">
+  <div>
+    <h2>계정 설정</h2>
+    <p>내 계정 정보를 관리해요</p>
+  </div>
+</div>
+
+<div class="settings-form">
+  <div class="field">
+    <label>이름</label>
+    <input type="text" value="차민지" readonly style="background:var(--surface);cursor:not-allowed;" />
+  </div>
+
+  <div class="field">
+    <label>이메일</label>
+    <input type="email" value="hyunwoo@example.com" readonly style="background:var(--surface);cursor:not-allowed;" />
+  </div>
+
+  <div class="field">
+    <label>직책</label>
+    <input type="text" value="프로젝트 관리자" readonly style="background:var(--surface);cursor:not-allowed;" />
+  </div>
+
+  <div class="field">
+    <label>가입 날짜</label>
+    <input type="text" value="2024년 1월 15일" readonly style="background:var(--surface);cursor:not-allowed;" />
+  </div>
+
+  <div class="field" style="margin-top:2rem;">
+    <label>비밀번호</label>
+    <button class="btn btn-secondary">비밀번호 변경</button>
+  </div>
+
+  <div class="field" style="margin-top:2rem;">
+    <label>계정 보안</label>
+    <div class="checkbox-row">
+      <input type="checkbox" id="two-factor" checked />
+      <label for="two-factor">2단계 인증 사용</label>
+    </div>
+  </div>
+</div>
+
+<script>
+  fetch('../_sidebar.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('sidebar').innerHTML = html;
+    });
+</script>
+<script>
+  (function(){
+    // 설정 페이지 로직
+  })();
+  </script>
+</main>
+</div>
+</body>
+</html>

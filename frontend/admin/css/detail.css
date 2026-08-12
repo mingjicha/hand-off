@@ -1,0 +1,431 @@
+/* ========================================
+   DETAIL.HTML - PROJECT DETAIL PAGE
+   ======================================== */
+
+/* 브래드크럼 */
+.editor-crumb {
+  font-size: 13px;
+  color: var(--sage);
+  margin-bottom: 10px;
+}
+
+/* 브래드크럼 > 링크 (2단계) */
+.editor-crumb .nav-link {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* 상단 헤더 */
+.proj-detail-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+/* 헤더 > 제목 (2단계) */
+.proj-detail-head .proj-detail-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 헤더 > 토글 (2단계) */
+.proj-detail-head .demo-toggle {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* 토글 > 버튼 (3단계) */
+.proj-detail-head .demo-toggle .demo-toggle-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 6px 11px;
+  border: none;
+  background: var(--bg-raised);
+  color: var(--sage);
+  cursor: pointer;
+}
+
+/* 버튼 > 중간 버튼 (3단계) */
+.proj-detail-head .demo-toggle .demo-toggle-btn:not(:last-child) {
+  border-right: 1px solid var(--line);
+}
+
+/* 버튼 > 활성 (3단계) */
+.proj-detail-head .demo-toggle .demo-toggle-btn.active {
+  background: var(--dev-soft);
+  color: var(--dev);
+  font-weight: 600;
+}
+
+/* 헤더 > 클라이언트 정보 (2단계) */
+.proj-detail-head .proj-detail-client {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 22px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+/* 클라이언트 정보 > 속성 행 (3단계) */
+.proj-detail-head .proj-detail-client .td-props-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 속성 행 > 라벨 (3단계) */
+.proj-detail-head .proj-detail-client .td-props-label {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* 속성 행 > 값 (3단계) */
+.proj-detail-head .proj-detail-client .td-props-value {
+  font-weight: 500;
+}
+
+/* Detail 페이지 탭 섹션 (view-tabs 재사용) */
+/* (이미 list.html에서 정의됨 - detail.html도 동일하게 사용) */
+
+/* 탭 콘텐츠 컨테이너 */
+.subpanel {
+  display: none;
+}
+
+.subpanel.active {
+  display: block;
+}
+
+/* ===== 티켓 탭 ===== */
+/* 완료 배너 */
+.subpanel .all-clear-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--dev-soft);
+  padding: 14px 18px;
+  margin: 16px 0 20px;
+}
+
+/* 배너 > 체크 아이콘 (3단계) */
+.subpanel .all-clear-banner .all-clear-check {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--bg-raised);
+  color: var(--dev);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+/* 배너 > 텍스트 (3단계) */
+.subpanel .all-clear-banner strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 2px;
+  color: var(--dev);
+}
+
+.subpanel .all-clear-banner p {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+/* 티켓 테이블 (proj-table-wrap 3단계 정의) */
+.subpanel .proj-table-wrap {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-raised);
+  overflow: hidden;
+  width: 100%;
+}
+
+.subpanel .proj-table-wrap .proj-table-scroll {
+  overflow: auto;
+  display: block;
+}
+
+.subpanel .proj-table-wrap .proj-table-scroll .proj-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  table-layout: fixed;
+}
+
+/* 티켓 테이블 > 셀 스타일 (3단계) */
+.subpanel .proj-table-wrap .proj-table-scroll .proj-table thead th {
+  text-align: left;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--sage);
+  font-weight: 500;
+  background: var(--bg-raised);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.subpanel .proj-table-wrap .proj-table-scroll .proj-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+.subpanel .proj-table-wrap .proj-table-scroll .proj-table tr.clickable-row {
+  cursor: pointer;
+}
+
+.subpanel .proj-table-wrap .proj-table-scroll .proj-table tr:last-child td {
+  border-bottom: none;
+}
+
+.subpanel .proj-table-wrap .proj-table-scroll .proj-table tr:hover td {
+  background: var(--bg);
+}
+
+/* 티켓 데이터 필드 */
+.subpanel .proj-table-wrap .proj-table-scroll .proj-table .tid {
+  font-weight: 600;
+}
+
+.subpanel .proj-table-wrap .proj-table-scroll .proj-table .status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.subpanel .proj-table-wrap .proj-table-scroll .proj-table .status-chip .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.subpanel .proj-table-wrap .proj-table-scroll .proj-table .status-chip .dot-open {
+  background: var(--client);
+}
+
+.subpanel .proj-table-wrap .proj-table-scroll .proj-table .status-chip .dot-progress {
+  background: var(--line);
+}
+
+.subpanel .proj-table-wrap .proj-table-scroll .proj-table .status-chip .dot-done {
+  background: var(--sage);
+}
+
+.subpanel .proj-table-wrap .proj-table-scroll .proj-table .ticket-date {
+  font-size: 12px;
+  color: var(--sage);
+}
+
+/* ===== 매뉴얼 탭 ===== */
+/* 매뉴얼 리스트 (2단계) */
+.subpanel .pd-manual-list {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-raised);
+  overflow: hidden;
+}
+
+/* 매뉴얼 리스트 > 항목 (3단계) */
+.subpanel .pd-manual-list .pd-manual-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13.5px;
+  cursor: pointer;
+}
+
+.subpanel .pd-manual-list .pd-manual-row:last-child {
+  border-bottom: none;
+}
+
+/* 항목 > 카테고리 배지 (3단계) */
+.subpanel .pd-manual-list .pd-manual-row .fm-category {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: var(--sage);
+  background: var(--line);
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+/* 항목 > 화살표 (3단계) */
+.subpanel .pd-manual-list .pd-manual-row .arrow {
+  color: var(--sage);
+  font-family: var(--font-mono);
+}
+
+/* ===== 설정 탭 ===== */
+/* 팀 멤버 노트 */
+.subpanel .team-viewer-note {
+  font-size: 12.5px;
+  color: var(--sage);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 10px 0 4px;
+}
+
+/* 설정 그룹 (2단계) */
+.subpanel .pd-settings-group {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-raised);
+  padding: 4px 0;
+  margin-bottom: 16px;
+}
+
+.subpanel .pd-settings-group.section-divider {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-raised);
+  padding: 4px 0;
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
+
+/* 설정 행 (3단계) */
+.subpanel .pd-settings-group .pd-settings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.subpanel .pd-settings-group .pd-settings-row:last-child {
+  border-bottom: none;
+}
+
+/* 행 > 라벨 (3단계) */
+.subpanel .pd-settings-group .pd-settings-row .pd-settings-label {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+/* 행 > 서브텍스트 (3단계) */
+.subpanel .pd-settings-group .pd-settings-row .pd-settings-sub {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+/* 행 > 입력 필드 (3단계) */
+.subpanel .pd-settings-group .pd-settings-row .pd-settings-input {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  font-size: 14px;
+  color: var(--ink);
+  width: 250px;
+}
+
+/* 행 > 링크 박스 (3단계) */
+.subpanel .pd-settings-group .pd-settings-row .pd-link-box {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  font-size: 14px;
+  color: var(--ink-soft);
+  width: 250px;
+  word-break: break-all;
+}
+
+.subpanel .pd-settings-group .pd-settings-row .pd-link-box.portal-link {
+  display: inline-block;
+}
+
+/* 행 > 연락처 입력 (3단계) */
+.subpanel .pd-settings-group .pd-settings-row .pd-contact-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 250px;
+}
+
+.subpanel .pd-settings-group .pd-settings-row .pd-contact-input {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  font-size: 14px;
+  color: var(--ink);
+  width: 100%;
+}
+
+/* 연락처 > 배지 (3단계) */
+.subpanel .pd-settings-group .pd-settings-row .pd-contact-badge {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  background: var(--dev-soft);
+  color: var(--dev);
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.subpanel .pd-settings-group .pd-settings-row .pd-contact-badge img {
+  width: 12px;
+  height: 12px;
+}
+
+/* 행 > 라벨 섹션 (3단계) */
+.subpanel .pd-settings-group .pd-settings-row .pd-label-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* 라벨 섹션 > 카카오 아이콘 (3단계) */
+.subpanel .pd-settings-group .pd-settings-row .pd-kakao-wrapper-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+}
+
+/* 카카오 아이콘 > 툴팁 (3단계) */
+.subpanel .pd-settings-group .pd-settings-row .pd-kakao-wrapper-icon .pd-kakao-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: white;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 10px;
+  white-space: nowrap;
+  margin-bottom: 6px;
+  z-index: 1000;
+  display: none;
+}
+
+.subpanel .pd-settings-group .pd-settings-row .pd-kakao-wrapper-icon:hover .pd-kakao-tooltip {
+  display: block;
+}

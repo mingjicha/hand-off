@@ -1,0 +1,82 @@
+// ========================================
+// MIXINS - 재사용 가능한 코드 패턴
+// ========================================
+
+// Flexbox 중앙 정렬
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// 반응형 미디어 쿼리
+@mixin media-tablet {
+  @media (max-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin media-mobile {
+  @media (max-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+// 텍스트 자르기
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// 호버 효과
+@mixin hover-state {
+  transition: all $transition-base;
+
+  &:hover {
+    @content;
+  }
+}
+
+// 버튼 리셋
+@mixin button-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+// 그림자
+@mixin shadow-sm {
+  box-shadow: $shadow-sm;
+}
+
+@mixin shadow-md {
+  box-shadow: $shadow-md;
+}
+
+@mixin shadow-lg {
+  box-shadow: $shadow-lg;
+}
+
+// 절대 위치 중앙
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

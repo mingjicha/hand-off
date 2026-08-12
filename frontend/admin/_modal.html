@@ -1,0 +1,64 @@
+<div class="modal-overlay" id="delete-modal">
+  <div class="modal-dialog">
+    <div class="modal-title">삭제</div>
+    <div class="modal-message" id="delete-modal-message"></div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" id="delete-modal-cancel">취소</button>
+      <button class="modal-btn modal-btn-confirm" id="delete-modal-confirm">삭제</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="manual-list-modal">
+  <div class="modal-dialog">
+    <div class="modal-title" id="manual-list-title" style="border-bottom: 1px solid var(--line); padding-bottom: 12px;"></div>
+    <div class="modal-message" id="manual-list-content" style="max-height: 300px; overflow-y: auto;"></div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" id="manual-list-close">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.showDeleteModal = function(title, message, onConfirm, isDisabled) {
+    var modal = document.getElementById('delete-modal');
+    var modalTitle = modal.querySelector('.modal-title');
+    var modalMessage = document.getElementById('delete-modal-message');
+    var confirmBtn = document.getElementById('delete-modal-confirm');
+    var cancelBtn = document.getElementById('delete-modal-cancel');
+
+    modalTitle.textContent = title;
+    modalMessage.textContent = message;
+    modal.classList.add('active');
+
+    if (isDisabled) {
+      confirmBtn.disabled = true;
+      confirmBtn.style.opacity = '0.5';
+      confirmBtn.style.cursor = 'not-allowed';
+    } else {
+      confirmBtn.disabled = false;
+      confirmBtn.style.opacity = '1';
+      confirmBtn.style.cursor = 'pointer';
+    }
+
+    var handleConfirm = function(){
+      modal.classList.remove('active');
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+      if (onConfirm) onConfirm();
+    };
+
+    var handleCancel = function(){
+      modal.classList.remove('active');
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+    };
+
+    confirmBtn.removeEventListener('click', confirmBtn._handler);
+    cancelBtn.removeEventListener('click', cancelBtn._handler);
+    confirmBtn.addEventListener('click', handleConfirm);
+    cancelBtn.addEventListener('click', handleCancel);
+    confirmBtn._handler = handleConfirm;
+    cancelBtn._handler = handleCancel;
+  };
+</script>

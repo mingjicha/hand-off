@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/shared.css">
+<link rel="stylesheet" href="../layout.html">
+<title>핸드오프 — 관리자</title>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="app-sidebar" id="sidebar"></aside>
+  <main class="app-main">
+<div class="main-head">
+  <div>
+    <h2 id="manual-title">매뉴얼 제목</h2>
+    <p id="manual-subtitle">부제목</p>
+  </div>
+  <button class="btn btn-secondary">편집</button>
+</div>
+
+<div class="manual-detail-container">
+  <div class="detail-section">
+    <h3>정보</h3>
+    <dl>
+      <dt>프로젝트</dt>
+      <dd id="manual-project">-</dd>
+      <dt>카테고리</dt>
+      <dd id="manual-category">-</dd>
+      <dt>작성자</dt>
+      <dd id="manual-author">-</dd>
+      <dt>최종 수정</dt>
+      <dd id="manual-updated">-</dd>
+      <dt>조회수</dt>
+      <dd id="manual-views">0</dd>
+    </dl>
+  </div>
+
+  <div class="detail-section">
+    <h3>내용</h3>
+    <div id="manual-content" class="manual-content">
+      <!-- 매뉴얼 본문 -->
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <h3>첨부파일</h3>
+    <div id="manual-attachments" class="attachments-list">
+      <!-- 첨부파일 목록 -->
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <h3>관련 티켓</h3>
+    <div id="manual-related-tickets" class="related-tickets-list">
+      <!-- 관련 티켓 목록 -->
+    </div>
+  </div>
+</div>
+
+<script>
+  fetch('../_sidebar.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('sidebar').innerHTML = html;
+    });
+</script>
+<script>
+  (function(){
+    // 매뉴얼 상세 페이지 로직
+    // URL 파라미터 또는 sessionStorage에서 매뉴얼 ID를 가져와 상세 정보 로드
+  })();
+  </script>
+</main>
+</div>
+</body>
+</html>

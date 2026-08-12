@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/shared.css">
+<link rel="stylesheet" href="../layout.html">
+<link rel="stylesheet" href="../css/list.css">
+<title>핸드오프 — 관리자</title>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="app-sidebar" id="sidebar"></aside>
+  <main class="app-main">
+    <div class="main-head">
+      <div>
+        <h2>프로젝트</h2>
+        <p>진행 중인 모든 프로젝트를 한눈에 확인하세요 · 전체 10개</p>
+      </div>
+      <button class="btn btn-primary">+ 새 프로젝트</button>
+    </div>
+
+    <div class="view-tabs">
+      <button class="view-tab active" data-view="grid">카드</button>
+      <button class="view-tab" data-view="list">리스트</button>
+    </div>
+
+    <div class="dash-toolbar">
+      <button class="toolbar-toggle-btn" id="proj-mine-toggle" type="button">담당 프로젝트만 보기</button>
+      <div class="sort-dropdown" id="proj-sort-dropdown">
+        <button class="sort-select" id="proj-sort-btn" type="button">정렬 · <span id="proj-sort-label">미해결 우선</span> ▾</button>
+        <div class="sort-menu" id="proj-sort-menu">
+          <button class="sort-option active" data-sort="open">미해결 우선</button>
+          <button class="sort-option" data-sort="date">최근 등록순</button>
+          <button class="sort-option" data-sort="name">이름순</button>
+        </div>
+      </div>
+      <label class="search-input"><img src="../../assets/svg/home/search.svg" alt="검색"> <input id="proj-search" type="text" placeholder="프로젝트, 클라이언트 검색" /></label>
+    </div>
+
+    <div class="proj-grid-scroll" id="proj-grid-view">
+    <div class="proj-grid" id="proj-grid-list">
+      <div class="proj-card clickable nav-link" data-tab="projdetail" data-name="카페 마르디 웹사이트" data-open="2" data-date="20260724" data-assignee="차민지">
+        <div class="proj-card-top">
+          <div><div class="p-name">카페 마르디 웹사이트</div><div class="p-client">클라이언트 · 마르디 로스터스</div></div>
+        </div>
+        <div class="proj-stats"><span class="badge-open"><b>2</b>건 미해결</span><span>매뉴얼 <b>8</b>개</span><span class="p-assignee">담당 · 차민지</span></div>
+      </div>
+      <div class="proj-card clickable nav-link" data-tab="projdetail" data-name="스튜디오 예약 시스템" data-open="1" data-date="20260723" data-assignee="이서연">
+        <div class="proj-card-top">
+          <div><div class="p-name">스튜디오 예약 시스템</div><div class="p-client">클라이언트 · 하늘 스튜디오</div></div>
+        </div>
+        <div class="proj-stats"><span class="badge-open"><b>1</b>건 미해결</span><span>매뉴얼 <b>5</b>개</span><span class="p-assignee">담당 · 이서연</span></div>
+      </div>
+      <div class="proj-card clickable nav-link" data-tab="projdetail" data-name="브런치 카페 소보로" data-open="1" data-date="20260722" data-assignee="정하늘">
+        <div class="proj-card-top">
+          <div><div class="p-name">브런치 카페 소보로</div><div class="p-client">클라이언트 · 소보로 F&amp;B</div></div>
+        </div>
+        <div class="proj-stats"><span class="badge-open"><b>1</b>건 미해결</span><span>매뉴얼 <b>6</b>개</span><span class="p-assignee">담당 · 정하늘</span></div>
+      </div>
+      <div class="proj-card clickable nav-link" data-tab="projdetail" data-name="필라테스 스튜디오 예약" data-open="0" data-date="20260718" data-assignee="이서연">
+        <div class="proj-card-top">
+          <div><div class="p-name">필라테스 스튜디오 예약</div><div class="p-client">클라이언트 · 코어 필라테스</div></div>
+        </div>
+        <div class="proj-stats"><span><b>0</b>건 미해결</span><span>매뉴얼 <b>7</b>개</span><span class="p-assignee">담당 · 이서연</span></div>
+      </div>
+      <div class="proj-card clickable nav-link" data-tab="projdetail" data-name="쇼핑몰 리뉴얼" data-open="0" data-date="20260715" data-assignee="정하늘">
+        <div class="proj-card-top">
+          <div><div class="p-name">쇼핑몰 리뉴얼</div><div class="p-client">클라이언트 · 소도 브랜드</div></div>
+        </div>
+        <div class="proj-stats"><span><b>0</b>건 미해결</span><span>매뉴얼 <b>12</b>개</span><span class="p-assignee">담당 · 정하늘</span></div>
+      </div>
+      <div class="proj-card clickable nav-link" data-tab="projdetail" data-name="포트폴리오 사이트" data-open="0" data-date="20260711" data-assignee="이서연">
+        <div class="proj-card-top">
+          <div><div class="p-name">포트폴리오 사이트</div><div class="p-client">클라이언트 · 김도윤</div></div>
+        </div>
+        <div class="proj-stats"><span><b>0</b>건 미해결</span><span>매뉴얼 <b>3</b>개</span><span class="p-assignee">담당 · 이서연</span></div>
+      </div>
+      <div class="proj-card clickable nav-link" data-tab="projdetail" data-name="동네 세탁소 예약 폼" data-open="0" data-date="20260709" data-assignee="정하늘">
+        <div class="proj-card-top">
+          <div><div class="p-name">동네 세탁소 예약 폼</div><div class="p-client">클라이언트 · 클린업 세탁소</div></div>
+        </div>
+        <div class="proj-stats"><span><b>0</b>건 미해결</span><span>매뉴얼 <b>4</b>개</span><span class="p-assignee">담당 · 정하늘</span></div>
+      </div>
+      <div class="proj-card clickable nav-link" data-tab="projdetail" data-name="독립 서점 홈페이지" data-open="0" data-date="20260706" data-assignee="이서연">
+        <div class="proj-card-top">
+          <div><div class="p-name">독립 서점 홈페이지</div><div class="p-client">클라이언트 · 책방 마루</div></div>
+        </div>
+        <div class="proj-stats"><span><b>0</b>건 미해결</span><span>매뉴얼 <b>9</b>개</span><span class="p-assignee">담당 · 이서연</span></div>
+      </div>
+      <div class="proj-card clickable nav-link" data-tab="projdetail" data-name="요가원 회원관리" data-open="0" data-date="20260630" data-assignee="정하늘">
+        <div class="proj-card-top">
+          <div><div class="p-name">요가원 회원관리</div><div class="p-client">클라이언트 · 숨 요가</div></div>
+        </div>
+        <div class="proj-stats"><span><b>0</b>건 미해결</span><span>매뉴얼 <b>6</b>개</span><span class="p-assignee">담당 · 정하늘</span></div>
+      </div>
+      <div class="proj-card clickable nav-link" data-tab="projdetail" data-name="디자인 스튜디오 소개 페이지" data-open="0" data-date="20260624" data-assignee="이서연">
+        <div class="proj-card-top">
+          <div><div class="p-name">디자인 스튜디오 소개 페이지</div><div class="p-client">클라이언트 · 스튜디오 인우</div></div>
+        </div>
+        <div class="proj-stats"><span><b>0</b>건 미해결</span><span>매뉴얼 <b>5</b>개</span><span class="p-assignee">담당 · 이서연</span></div>
+      </div>
+    </div>
+    </div>
+
+    <div class="proj-table-wrap" id="proj-list-view" style="display:none;">
+      <div class="proj-table-scroll">
+      <table class="proj-table">
+        <thead>
+          <tr><th class="p-name">프로젝트</th><th class="p-client">클라이언트</th><th class="p-assignee">담당자</th><th class="p-open">미해결</th><th class="p-manual">매뉴얼</th><th class="p-updated">최근 활동</th></tr>
+        </thead>
+        <tbody id="proj-list-body">
+          <tr class="clickable-row nav-link" data-tab="projdetail" data-name="카페 마르디 웹사이트" data-open="2" data-date="20260724" data-assignee="차민지"><td class="p-name">카페 마르디 웹사이트</td><td class="p-client">마르디 로스터스</td><td class="p-assignee">차민지</td><td class="p-open has-open">2건</td><td class="p-manual">8개</td><td class="p-updated">7월 24일</td></tr>
+          <tr class="clickable-row nav-link" data-tab="projdetail" data-name="스튜디오 예약 시스템" data-open="1" data-date="20260723" data-assignee="이서연"><td class="p-name">스튜디오 예약 시스템</td><td class="p-client">하늘 스튜디오</td><td class="p-assignee">이서연</td><td class="p-open has-open">1건</td><td class="p-manual">5개</td><td class="p-updated">7월 23일</td></tr>
+          <tr class="clickable-row nav-link" data-tab="projdetail" data-name="브런치 카페 소보로" data-open="1" data-date="20260722" data-assignee="정하늘"><td class="p-name">브런치 카페 소보로</td><td class="p-client">소보로 F&amp;B</td><td class="p-assignee">정하늘</td><td class="p-open has-open">1건</td><td class="p-manual">6개</td><td class="p-updated">7월 22일</td></tr>
+          <tr class="clickable-row nav-link" data-tab="projdetail" data-name="필라테스 스튜디오 예약" data-open="0" data-date="20260718" data-assignee="이서연"><td class="p-name">필라테스 스튜디오 예약</td><td class="p-client">코어 필라테스</td><td class="p-assignee">이서연</td><td class="p-open none">0건</td><td class="p-manual">7개</td><td class="p-updated">7월 18일</td></tr>
+          <tr class="clickable-row nav-link" data-tab="projdetail" data-name="쇼핑몰 리뉴얼" data-open="0" data-date="20260715" data-assignee="정하늘"><td class="p-name">쇼핑몰 리뉴얼</td><td class="p-client">소도 브랜드</td><td class="p-assignee">정하늘</td><td class="p-open none">0건</td><td class="p-manual">12개</td><td class="p-updated">7월 15일</td></tr>
+          <tr class="clickable-row nav-link" data-tab="projdetail" data-name="포트폴리오 사이트" data-open="0" data-date="20260711" data-assignee="이서연"><td class="p-name">포트폴리오 사이트</td><td class="p-client">김도윤</td><td class="p-assignee">이서연</td><td class="p-open none">0건</td><td class="p-manual">3개</td><td class="p-updated">7월 11일</td></tr>
+          <tr class="clickable-row nav-link" data-tab="projdetail" data-name="동네 세탁소 예약 폼" data-open="0" data-date="20260709" data-assignee="정하늘"><td class="p-name">동네 세탁소 예약 폼</td><td class="p-client">클린업 세탁소</td><td class="p-assignee">정하늘</td><td class="p-open none">0건</td><td class="p-manual">4개</td><td class="p-updated">7월 9일</td></tr>
+          <tr class="clickable-row nav-link" data-tab="projdetail" data-name="독립 서점 홈페이지" data-open="0" data-date="20260706" data-assignee="이서연"><td class="p-name">독립 서점 홈페이지</td><td class="p-client">책방 마루</td><td class="p-assignee">이서연</td><td class="p-open none">0건</td><td class="p-manual">9개</td><td class="p-updated">7월 6일</td></tr>
+          <tr class="clickable-row nav-link" data-tab="projdetail" data-name="요가원 회원관리" data-open="0" data-date="20260630" data-assignee="정하늘"><td class="p-name">요가원 회원관리</td><td class="p-client">숨 요가</td><td class="p-assignee">정하늘</td><td class="p-open none">0건</td><td class="p-manual">6개</td><td class="p-updated">6월 30일</td></tr>
+          <tr class="clickable-row nav-link" data-tab="projdetail" data-name="디자인 스튜디오 소개 페이지" data-open="0" data-date="20260624" data-assignee="이서연"><td class="p-name">디자인 스튜디오 소개 페이지</td><td class="p-client">스튜디오 인우</td><td class="p-assignee">이서연</td><td class="p-open none">0건</td><td class="p-manual">5개</td><td class="p-updated">6월 24일</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="../_sidebar-toggle.js"></script>
+<script>
+  fetch('../_sidebar.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('sidebar').innerHTML = html;
+      // 프로젝트 페이지 active 처리
+      var projectToggle = document.getElementById('project-toggle');
+      var projectSubmenu = document.getElementById('project-submenu');
+      if (projectToggle) {
+        projectToggle.classList.add('active');
+      }
+      if (projectSubmenu) {
+        projectSubmenu.classList.add('open');
+      }
+      // 다른 nav-item active 처리
+      var navItems = document.querySelectorAll('#sidebar .nav-item');
+      navItems.forEach(function(item){
+        var href = item.getAttribute('onclick');
+        if (href && href.includes('project/list.html')) {
+          item.classList.add('active');
+        }
+      });
+      // 토글 기능 초기화 (프로젝트 페이지)
+      initializeSidebarToggle(true);
+    });
+</script>
+<script>
+  (function(){
+    var CURRENT_USER_NAME = '차민지';
+    var PROJECT_ASSIGNEE = {
+      '카페 마르디 웹사이트': '차민지',
+      '스튜디오 예약 시스템': '이서연',
+      '브런치 카페 소보로': '정하늘',
+      '필라테스 스튜디오 예약': '이서연',
+      '쇼핑몰 리뉴얼': '정하늘',
+      '포트폴리오 사이트': '이서연',
+      '동네 세탁소 예약 폼': '정하늘',
+      '독립 서점 홈페이지': '이서연',
+      '요가원 회원관리': '정하늘',
+      '디자인 스튜디오 소개 페이지': '이서연'
+    };
+
+    // 프로젝트 뷰 전환 (grid/list)
+    var viewBtns = document.querySelectorAll('.view-tabs .view-tab');
+    var gridView = document.getElementById('proj-grid-view');
+    var listView = document.getElementById('proj-list-view');
+    viewBtns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        viewBtns.forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        if (btn.dataset.view === 'grid') {
+          gridView.style.display = '';
+          listView.style.display = 'none';
+        } else {
+          gridView.style.display = 'none';
+          listView.style.display = '';
+        }
+      });
+    });
+
+    // 프로젝트 정렬
+    var sortDropdown = document.getElementById('proj-sort-dropdown');
+    var sortBtn = document.getElementById('proj-sort-btn');
+    var sortLabel = document.getElementById('proj-sort-label');
+    var sortOptions = sortDropdown ? sortDropdown.querySelectorAll('.sort-option') : [];
+    var projGridList = document.getElementById('proj-grid-list');
+    var projListBody = document.getElementById('proj-list-body');
+
+    var sortKeyMap = { open: 'data-open', date: 'data-date', name: 'data-name' };
+
+    function sortProjects(key){
+      [projGridList, projListBody].forEach(function(container){
+        if (!container) return;
+        var items = Array.prototype.slice.call(container.children);
+        items.sort(function(a, b){
+          if (key === 'name') {
+            return a.getAttribute('data-name').localeCompare(b.getAttribute('data-name'), 'ko');
+          }
+          var av = Number(a.getAttribute(sortKeyMap[key]));
+          var bv = Number(b.getAttribute(sortKeyMap[key]));
+          return bv - av;
+        });
+        items.forEach(function(item){ container.appendChild(item); });
+      });
+    }
+
+    if (sortBtn) {
+      sortBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        sortDropdown.classList.toggle('open');
+      });
+      sortOptions.forEach(function(opt){
+        opt.addEventListener('click', function(){
+          sortOptions.forEach(function(o){ o.classList.remove('active'); });
+          opt.classList.add('active');
+          sortLabel.textContent = opt.textContent;
+          sortProjects(opt.dataset.sort);
+          sortDropdown.classList.remove('open');
+        });
+      });
+    }
+
+    // 프로젝트 필터 (내 프로젝트만)
+    var mineToggle = document.getElementById('proj-mine-toggle');
+    if (mineToggle) {
+      mineToggle.addEventListener('click', function(){
+        var active = mineToggle.classList.toggle('active');
+        [projGridList, projListBody].forEach(function(container){
+          if (!container) return;
+          Array.prototype.forEach.call(container.children, function(item){
+            var mine = item.getAttribute('data-assignee') === CURRENT_USER_NAME;
+            item.style.display = (active && !mine) ? 'none' : '';
+          });
+        });
+      });
+    }
+
+    // 드롭다운 닫기
+    document.addEventListener('click', function(){
+      if (sortDropdown) sortDropdown.classList.remove('open');
+    });
+
+    // 프로젝트 카드/행 클릭 시 상세페이지로 이동
+    var navLinks = document.querySelectorAll('.nav-link[data-tab="projdetail"]');
+    navLinks.forEach(function(link){
+      link.addEventListener('click', function(){
+        var projName = this.getAttribute('data-name');
+        if (projName) {
+          location.href = './detail.html?name=' + encodeURIComponent(projName);
+        }
+      });
+    });
+  })();
+</script>
+</body>
+</html>

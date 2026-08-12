@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../assets/shared.css">
+<title>핸드오프 — 관리자 레이아웃</title>
+<style>
+/* 관리자 공통 레이아웃 정의 */
+
+:root {
+  /* 레이아웃 크기 */
+  --sidebar-width: 280px;
+  --main-padding: 40px;
+  --app-max-width: 100%;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+}
+
+.app-shell {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+}
+
+.app-sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  background: var(--bg-raised);
+  border-right: 1px solid var(--line);
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+.app-main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--main-padding);
+  max-width: calc(100% - var(--sidebar-width));
+  height: 100%;
+}
+
+/* 반응형 레이아웃 */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 180px;
+    --main-padding: 20px;
+  }
+
+  .app-shell {
+    flex-direction: column;
+  }
+
+  .app-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    top: auto;
+  }
+}
+
+/* 다크 테마 지원 */
+@media (prefers-color-scheme: dark) {
+  .app-sidebar {
+    background: var(--bg-raised);
+  }
+}
+</style>
+</head>
+<body>
+  <!-- 이 파일은 공통 레이아웃 정의 및 설정용입니다 -->
+  <!-- 각 HTML 파일에서 이 CSS를 import해서 사용합니다 -->
+  <script>
+    // 공통 설정
+    window.AdminConfig = {
+      sidebarWidth: '220px',
+      mainPadding: '32px',
+      theme: localStorage.getItem('adminTheme') || 'light'
+    };
+
+    // 테마 설정
+    if (window.AdminConfig.theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/shared.css">
+<link rel="stylesheet" href="../layout.html">
+<link rel="stylesheet" href="../css/detail.css">
+<title>핸드오프 — 관리자</title>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="app-sidebar" id="sidebar"></aside>
+  <main class="app-main">
+    <div class="editor-crumb"><span class="nav-link" data-tab="dash">프로젝트</span> / 카페 마르디 웹사이트</div>
+    <div class="proj-detail-head">
+      <div>
+        <h2 class="proj-detail-title">카페 마르디 웹사이트</h2>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div class="demo-toggle">
+          <button class="demo-toggle-btn active" data-state="open">미해결 있음</button>
+          <button class="demo-toggle-btn" data-state="clear">모두 완료</button>
+        </div>
+        <button class="btn btn-ghost">초대 링크 복사</button>
+      </div>
+    </div>
+
+    <div class="proj-detail-client">
+      <div class="td-props-row">
+        <span class="td-props-label">클라이언트</span>
+        <span class="td-props-value" id="proj-client-name" style="color: var(--client); font-weight: 500;">마르디 로스터스</span>
+      </div>
+      <div class="td-props-row">
+        <span class="td-props-label">담당자</span>
+        <span class="td-props-value" id="proj-assignee-name" style="color: var(--dev); font-weight: 500;">박현우</span>
+      </div>
+    </div>
+
+    <div class="view-tabs">
+      <button class="view-tab active" data-view="pd-tickets">티켓 <span class="hint" id="pd-ticket-badge">2건 미해결</span></button>
+      <button class="view-tab" data-view="pd-manual">매뉴얼 <span class="hint">8개</span></button>
+      <button class="view-tab" data-view="pd-settings">설정</button>
+    </div>
+
+    <div class="subpanel active" id="sub-pd-tickets">
+      <div class="all-clear-banner" id="pd-clear-banner" style="display:none;">
+        <span class="all-clear-check"><img src="../../assets/svg/contents/check.svg" alt="완료" style="width: 14px; height: 14px;"></span>
+        <div>
+          <strong>모든 티켓이 완료됐어요</strong>
+          <p>지난 요청 기록은 아래에서 그대로 확인할 수 있어요.</p>
+        </div>
+      </div>
+      <div class="proj-table-wrap">
+        <div class="proj-table-scroll">
+          <table class="proj-table" id="pd-ticket-list">
+            <thead>
+              <tr><th>ID</th><th>상태</th><th>제목</th><th>생성 날짜</th><th>마지막 수정</th></tr>
+            </thead>
+            <tbody>
+              <tr class="clickable-row nav-link" data-tab="ticket" onclick="location.href='../ticket/detail.html?id=%23016'">
+                <td class="tid">#016</td><td><span class="status-chip"><span class="dot dot-open"></span>접수</span></td><td>모바일에서 메뉴 안 열리는 문제</td><td class="ticket-date">7월 24일</td><td class="ticket-date">방금 전</td>
+              </tr>
+              <tr class="clickable-row nav-link" data-tab="ticket" onclick="location.href='../ticket/detail.html?id=%23015'">
+                <td class="tid">#015</td><td><span class="status-chip"><span class="dot dot-progress"></span>진행중</span></td><td>예약 폼에 전화번호 필드 추가</td><td class="ticket-date">7월 23일</td><td class="ticket-date">1일 전</td>
+              </tr>
+              <tr class="clickable-row nav-link" data-tab="ticket" onclick="location.href='../ticket/detail.html?id=%23014'">
+                <td class="tid">#014</td><td><span class="status-chip"><span class="dot dot-done"></span>완료</span></td><td>메인 배너 문구 오타 수정</td><td class="ticket-date">7월 22일</td><td class="ticket-date">2일 전</td>
+              </tr>
+              <tr class="clickable-row nav-link" data-tab="ticket" onclick="location.href='../ticket/detail.html?id=%23009'">
+                <td class="tid">#009</td><td><span class="status-chip"><span class="dot dot-done"></span>완료</span></td><td>영업시간 안내 문구 수정</td><td class="ticket-date">7월 3일</td><td class="ticket-date">25일 전</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="proj-table-wrap" id="pd-ticket-history" style="display:none;">
+        <div class="proj-table-scroll">
+          <table class="proj-table">
+            <thead>
+              <tr><th>ID</th><th>상태</th><th>제목</th><th>생성 날짜</th><th>마지막 수정</th></tr>
+            </thead>
+            <tbody>
+              <tr class="clickable-row nav-link" data-tab="ticket" onclick="location.href='../ticket/detail.html?id=%23014'">
+                <td class="tid">#014</td><td><span class="status-chip"><span class="dot dot-done"></span>완료</span></td><td>메인 배너 문구 오타 수정</td><td class="ticket-date">7월 22일</td><td class="ticket-date">2일 전</td>
+              </tr>
+              <tr class="clickable-row nav-link" data-tab="ticket" onclick="location.href='../ticket/detail.html?id=%23009'">
+                <td class="tid">#009</td><td><span class="status-chip"><span class="dot dot-done"></span>완료</span></td><td>영업시간 안내 문구 수정</td><td class="ticket-date">7월 3일</td><td class="ticket-date">25일 전</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="subpanel" id="sub-pd-manual">
+      <div class="pd-manual-list">
+        <div class="pd-manual-row clickable-row nav-link" data-tab="manualedit" onclick="location.href='../manual/edit.html'"><span>메뉴판 수정하는 법<span class="fm-category" style="font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--sage); background: var(--line); padding: 1px 6px; border-radius: 4px; margin-left: 8px;">메뉴 관리</span></span><span class="arrow">→</span></div>
+        <div class="pd-manual-row clickable-row nav-link" data-tab="manualedit" onclick="location.href='../manual/edit.html'"><span>예약 내역 확인하는 법<span class="fm-category" style="font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--sage); background: var(--line); padding: 1px 6px; border-radius: 4px; margin-left: 8px;">예약</span></span><span class="arrow">→</span></div>
+        <div class="pd-manual-row clickable-row nav-link" data-tab="manualedit" onclick="location.href='../manual/edit.html'"><span>공지사항 올리는 법<span class="fm-category" style="font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--sage); background: var(--line); padding: 1px 6px; border-radius: 4px; margin-left: 8px;">공지사항</span></span><span class="arrow">→</span></div>
+        <div class="pd-manual-row clickable-row nav-link" data-tab="manualedit" onclick="location.href='../manual/edit.html'"><span>사진 갤러리 교체하는 법<span class="fm-category" style="font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--sage); background: var(--line); padding: 1px 6px; border-radius: 4px; margin-left: 8px;">갤러리</span></span><span class="arrow">→</span></div>
+        <div class="pd-manual-row clickable-row nav-link" data-tab="manualedit" onclick="location.href='../manual/edit.html'"><span>영업시간 변경하는 법<span class="fm-category" style="font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--sage); background: var(--line); padding: 1px 6px; border-radius: 4px; margin-left: 8px;">설정</span></span><span class="arrow">→</span></div>
+        <div class="pd-manual-row clickable-row nav-link" data-tab="manualedit" onclick="location.href='../manual/edit.html'"><span>리뷰 답글 다는 법<span class="fm-category" style="font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--sage); background: var(--line); padding: 1px 6px; border-radius: 4px; margin-left: 8px;">관리</span></span><span class="arrow">→</span></div>
+        <div class="pd-manual-row clickable-row nav-link" data-tab="manualedit" onclick="location.href='../manual/edit.html'"><span>SNS 링크 수정하는 법<span class="fm-category" style="font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--sage); background: var(--line); padding: 1px 6px; border-radius: 4px; margin-left: 8px;">SNS</span></span><span class="arrow">→</span></div>
+        <div class="pd-manual-row clickable-row nav-link" data-tab="manualedit" onclick="location.href='../manual/edit.html'"><span>관리자 비밀번호 변경하는 법<span class="fm-category" style="font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--sage); background: var(--line); padding: 1px 6px; border-radius: 4px; margin-left: 8px;">보안</span></span><span class="arrow">→</span></div>
+      </div>
+    </div>
+
+    <div class="subpanel" id="sub-pd-settings">
+      <div class="team-viewer-note" style="margin-bottom:14px;">담당자와 관리자만 프로젝트 설정을 바꿀 수 있어요. 다른 팀원은 조회만 가능해요.</div>
+      <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--warn); display: flex; align-items: center; gap: 6px;"><img src="../../assets/svg/contents/folder.svg" alt="프로젝트" style="width: 16px; height: 16px; flex-shrink: 0;"><span style="margin-top: 3px;">프로젝트</span></h3>
+      <div class="pd-settings-group">
+        <div class="pd-settings-row">
+          <div><div class="pd-settings-label">프로젝트명</div><div class="pd-settings-sub">프로젝트의 이름을 변경할 수 있어요</div></div>
+          <input type="text" id="proj-name-input" class="pd-settings-input" value="카페 마르디 웹사이트">
+        </div>
+        <div class="pd-settings-row">
+          <div><div class="pd-settings-label">담당자</div><div class="pd-settings-sub">이 프로젝트의 티켓·매뉴얼을 관리하는 개발자</div></div>
+          <div class="sort-dropdown" id="proj-assignee-dropdown" style="position: relative;">
+            <button class="sort-select" id="proj-assignee-btn" type="button" style="font-size: 13px;">차민지 ▾</button>
+            <div class="sort-menu" id="proj-assignee-menu" style="right: 0; left: auto;">
+              <label style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer;">
+                <input type="checkbox" value="박현우" checked> 차민지
+              </label>
+              <label style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer;">
+                <input type="checkbox" value="이서연"> 이서연
+              </label>
+              <label style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer;">
+                <input type="checkbox" value="정하늘"> 정하늘
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="pd-settings-row">
+          <div><div class="pd-settings-label">카테고리 관리</div><div class="pd-settings-sub">매뉴얼과 요청을 분류하는 이 프로젝트만의 카테고리</div></div>
+          <button class="btn btn-ghost nav-link" id="manage-categories-btn" data-tab="categories">관리하기 <img src="../../assets/svg/contents/chevron-right.svg" alt="화살표" style="width: 16px; height: 16px;"></button>
+        </div>
+      </div>
+      <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--warn); display: flex; align-items: center; gap: 6px;"><img src="../../assets/svg/contents/user.svg" alt="클라이언트" style="width: 16px; height: 16px; flex-shrink: 0;"><span style="margin-top: 3px;">클라이언트</span></h3>
+      <div class="pd-settings-group">
+        <div class="pd-settings-row">
+          <div><div class="pd-settings-label">클라이언트</div><div class="pd-settings-sub">프로젝트의 클라이언트를 변경할 수 있어요</div></div>
+          <input type="text" id="proj-client-input" class="pd-settings-input" value="마르디 로스터스">
+        </div>
+        <div class="pd-settings-row">
+          <div><div class="pd-settings-label">클라이언트 이메일</div><div class="pd-settings-sub">상태 변경 알림을 받을 주소</div></div>
+          <div class="pd-link-box" style="width: 250px;">mardi.roasters@example.com</div>
+        </div>
+        <div class="pd-settings-row">
+          <div class="pd-label-section">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <div class="pd-settings-label">클라이언트 연락처</div>
+              <div class="pd-kakao-wrapper-icon">
+                <img src="../../assets/img/contents/kakao-talk.png" alt="카톡" style="width: 24px; height: 24px; cursor: pointer;">
+                <div class="pd-kakao-tooltip">카톡 알림 설정</div>
+              </div>
+            </div>
+            <div class="pd-settings-sub">상태 변경 알림을 받을 연락처</div>
+          </div>
+          <div class="pd-contact-wrapper">
+            <input type="text" id="proj-kakao-input" value="010-1234-5678" class="pd-contact-input">
+            <span class="pd-contact-badge"><img src="../../assets/svg/contents/check.svg" alt="체크">인증완료</span>
+          </div>
+        </div>
+        <div class="pd-settings-row">
+          <div><div class="pd-settings-label">클라이언트 포털 링크</div><div class="pd-settings-sub">로그인 없이 접근 가능한 읽기 전용 URL</div></div>
+          <div class="pd-link-box portal-link" style="width: 250px; background: var(--bg);">handoff.app/p/cafe-mardi <button class="btn btn-ghost" style="padding:4px 10px;">복사</button></div>
+        </div>
+        <div class="pd-settings-row">
+          <div><div class="pd-settings-label">링크 재발급</div><div class="pd-settings-sub">기존 링크는 즉시 무효화됩니다</div></div>
+          <button class="btn btn-ghost">재발급</button>
+        </div>
+      </div>
+      <h3 style="font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--warn); display: flex; align-items: center; gap: 6px;"><img src="../../assets/svg/contents/archive.svg" alt="보관" style="width: 16px; height: 16px; flex-shrink: 0;"><span style="margin-top: 3px;">보관</span></h3>
+      <div class="pd-settings-group">
+        <div class="pd-settings-row">
+          <div><div class="pd-settings-label">프로젝트 상태</div><div class="pd-settings-sub" style="font-size: 12px;">관리자만 프로젝트를 보관하거나 다시 활성화할 수 있어요</div></div>
+          <button class="btn btn-ghost" id="toggle-archive-btn" data-archived="false">보관</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  fetch('../_sidebar.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('sidebar').innerHTML = html;
+      // 프로젝트 페이지 active 처리
+      var projectToggle = document.getElementById('project-toggle');
+      var projectSubmenu = document.getElementById('project-submenu');
+      if (projectToggle) {
+        projectToggle.classList.add('active');
+        projectToggle.addEventListener('click', function(){
+          location.href = '../project/list.html';
+        });
+      }
+      if (projectSubmenu) {
+        projectSubmenu.classList.add('open');
+      }
+    });
+</script>
+<script>
+  (function(){
+    var projectData = {
+      '카페 마르디 웹사이트': {
+        client: '마르디 로스터스',
+        assignee: '차민지',
+        team: '개발팀',
+        start: '2026년 6월 15일',
+        status: '진행중'
+      },
+      '스튜디오 예약 시스템': {
+        client: '하늘 스튜디오',
+        assignee: '이서연',
+        team: '개발팀',
+        start: '2026년 6월 10일',
+        status: '진행중'
+      },
+      '브런치 카페 소보로': {
+        client: '소보로 F&B',
+        assignee: '정하늘',
+        team: '개발팀',
+        start: '2026년 6월 5일',
+        status: '진행중'
+      },
+      '필라테스 스튜디오 예약': {
+        client: '코어 필라테스',
+        assignee: '이서연',
+        team: '개발팀',
+        start: '2026년 5월 20일',
+        status: '진행중'
+      },
+      '쇼핑몰 리뉴얼': {
+        client: '소도 브랜드',
+        assignee: '정하늘',
+        team: '개발팀',
+        start: '2026년 5월 15일',
+        status: '진행중'
+      },
+      '포트폴리오 사이트': {
+        client: '김도윤',
+        assignee: '이서연',
+        team: '개발팀',
+        start: '2026년 5월 1일',
+        status: '진행중'
+      },
+      '동네 세탁소 예약 폼': {
+        client: '클린업 세탁소',
+        assignee: '정하늘',
+        team: '개발팀',
+        start: '2026년 4월 20일',
+        status: '진행중'
+      },
+      '독립 서점 홈페이지': {
+        client: '책방 마루',
+        assignee: '이서연',
+        team: '개발팀',
+        start: '2026년 4월 10일',
+        status: '진행중'
+      },
+      '요가원 회원관리': {
+        client: '숨 요가',
+        assignee: '정하늘',
+        team: '개발팀',
+        start: '2026년 3월 25일',
+        status: '진행중'
+      },
+      '디자인 스튜디오 소개 페이지': {
+        client: '스튜디오 인우',
+        assignee: '이서연',
+        team: '개발팀',
+        start: '2026년 3월 15일',
+        status: '진행중'
+      }
+    };
+
+    var params = new URLSearchParams(location.search);
+    var projName = params.get('name');
+
+    if (projName && projectData[projName]) {
+      var data = projectData[projName];
+      document.querySelector('.proj-detail-title').textContent = projName;
+      document.getElementById('proj-client-name').textContent = data.client;
+      document.getElementById('proj-assignee-name').textContent = data.assignee;
+      document.querySelector('.editor-crumb').innerHTML = '<span class="nav-link" data-tab="dash">프로젝트</span> / ' + projName;
+    }
+
+    // 탭 전환 기능
+    var viewTabs = document.querySelectorAll('.view-tabs .view-tab');
+    var subpanels = document.querySelectorAll('.subpanel');
+
+    viewTabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        var tabName = this.getAttribute('data-view');
+
+        viewTabs.forEach(function(t){ t.classList.remove('active'); });
+        subpanels.forEach(function(p){ p.classList.remove('active'); });
+
+        this.classList.add('active');
+        document.getElementById('sub-' + tabName).classList.add('active');
+      });
+    });
+
+    // 모두 완료/미해결 토글
+    var demoToggles = document.querySelectorAll('.demo-toggle-btn');
+    var clearBanner = document.getElementById('pd-clear-banner');
+    var ticketListWrap = document.querySelector('#pd-ticket-list').closest('.proj-table-wrap');
+    var ticketHistory = document.getElementById('pd-ticket-history');
+    var ticketBadge = document.getElementById('pd-ticket-badge');
+
+    demoToggles.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var state = this.getAttribute('data-state');
+        demoToggles.forEach(function(b){ b.classList.remove('active'); });
+        this.classList.add('active');
+
+        if (state === 'clear') {
+          clearBanner.style.display = '';
+          ticketListWrap.style.display = 'none';
+          ticketHistory.style.display = '';
+          ticketBadge.innerHTML = '<span class="badge-cleared">✓ 모두 완료</span>';
+        } else {
+          clearBanner.style.display = 'none';
+          ticketListWrap.style.display = '';
+          ticketHistory.style.display = 'none';
+          ticketBadge.textContent = '2건 미해결';
+        }
+      });
+    });
+
+    // 담당자 드롭다운 (다중 선택)
+    var assigneeDropdown = document.getElementById('proj-assignee-dropdown');
+    var assigneeBtn = document.getElementById('proj-assignee-btn');
+    var assigneeCheckboxes = document.querySelectorAll('#proj-assignee-menu input[type="checkbox"]');
+
+    if (assigneeBtn) {
+      assigneeBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        assigneeDropdown.classList.toggle('open');
+      });
+
+      assigneeCheckboxes.forEach(function(checkbox){
+        checkbox.addEventListener('change', function(){
+          var selected = [];
+          assigneeCheckboxes.forEach(function(cb){
+            if (cb.checked) {
+              selected.push(cb.value);
+            }
+          });
+          if (selected.length > 0) {
+            assigneeBtn.textContent = selected.join(', ') + ' ▾';
+          } else {
+            assigneeBtn.textContent = '담당자 선택 ▾';
+          }
+        });
+      });
+    }
+
+    // 드롭다운 외부 클릭 시 닫기
+    document.addEventListener('click', function(){
+      if (assigneeDropdown) assigneeDropdown.classList.remove('open');
+    });
+
+    // 카테고리 관리 버튼
+    var manageCategoriesBtn = document.getElementById('manage-categories-btn');
+    if (manageCategoriesBtn) {
+      manageCategoriesBtn.addEventListener('click', function(){
+        var projName = params.get('name');
+        if (projName) {
+          location.href = '../project/category.html?project=' + encodeURIComponent(projName);
+        }
+      });
+    }
+
+    // 프로젝트 보관/활성화 토글
+    var toggleArchiveBtn = document.getElementById('toggle-archive-btn');
+    if (toggleArchiveBtn) {
+      toggleArchiveBtn.addEventListener('click', function(){
+        var isArchived = this.getAttribute('data-archived') === 'true';
+        if (isArchived) {
+          this.setAttribute('data-archived', 'false');
+          this.textContent = '보관';
+          this.style.color = 'inherit';
+        } else {
+          this.setAttribute('data-archived', 'true');
+          this.textContent = '활성화';
+          this.style.color = 'var(--danger)';
+        }
+      });
+    }
+
+
+    // 프로젝트 목록으로 돌아가기
+    var crumb = document.querySelector('.editor-crumb .nav-link[data-tab="dash"]');
+    if (crumb) {
+      crumb.addEventListener('click', function(){
+        location.href = './list.html';
+      });
+    }
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+// ========================================
+// MAIN - 모든 SCSS 파일 진입점
+// ========================================
+
+// 1. Abstracts (변수, 함수 - 아무것도 출력 안 함)
+@use 'abstracts/variables' as *;
+@use 'abstracts/mixins' as *;
+
+// 2. Base (기본 스타일)
+@use 'base/reset';
+@use 'base/typography';
+
+// 3. 기존 CSS 파일들 (나중에 정리)
+@import 'shared';
+@import 'admin';
+@import 'client';
+
+// 4. Pages (페이지별 고유 스타일)
+@import 'pages/list';
+@import 'pages/detail';

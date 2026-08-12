@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/shared.css">
+<link rel="stylesheet" href="../layout.html">
+<title>핸드오프 — 관리자</title>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="app-sidebar" id="sidebar"></aside>
+  <main class="app-main">
+<div class="main-head">
+  <div>
+    <h2>카테고리 관리</h2>
+    <p>매뉴얼을 묶을 카테고리를 프로젝트별로 직접 관리해요</p>
+  </div>
+</div>
+
+<ul class="category-usage-note">
+  <li>여기서 만든 카테고리는 <strong>매뉴얼 분류</strong>에 쓰여요</li>
+  <li>클라이언트가 요청을 남길 때 <strong>"어느 화면인가요?"</strong> 선택지로도 쓰여요</li>
+</ul>
+
+<div class="field" style="max-width:280px;">
+  <label>프로젝트 <span class="hint">카테고리를 추가할 프로젝트를 선택해요</span></label>
+  <div class="sort-dropdown" id="cat-project-dropdown">
+    <button class="sort-select" id="cat-project-btn" type="button">카페 마르디 웹사이트 ▾</button>
+    <div class="sort-menu" id="cat-project-menu">
+      <button class="sort-option active" value="cafe-mardi">카페 마르디 웹사이트</button>
+    </div>
+  </div>
+</div>
+
+<div class="category-add-row">
+  <input type="text" id="cat-new-input" placeholder="새 카테고리 이름을 입력하세요" />
+  <button class="btn btn-primary" id="cat-add-btn">+ 추가</button>
+</div>
+
+<div class="category-list" id="category-list">
+  <!-- 카테고리 항목이 여기 추가됨 -->
+</div>
+
+<div id="modal-container"></div>
+
+<script>
+  Promise.all([
+    fetch('../_sidebar.html').then(r => r.text()),
+    fetch('../_modal.html').then(r => r.text())
+  ]).then(function(results){
+    document.getElementById('sidebar').innerHTML = results[0];
+    document.getElementById('modal-container').innerHTML = results[1];
+
+    // 프로젝트 메뉴 active + open 처리
+    var projectToggle = document.getElementById('project-toggle');
+    var projectSubmenu = document.getElementById('project-submenu');
+    var categorySubitem = document.querySelector('#sidebar .nav-subitem');
+
+    if (projectToggle) {
+      projectToggle.classList.add('active');
+    }
+    if (projectSubmenu) {
+      projectSubmenu.classList.add('open');
+    }
+    if (categorySubitem) {
+      categorySubitem.classList.add('active');
+    }
+
+    // 사이드바 토글 초기화 (카테고리 관리 페이지이므로 false)
+    var script = document.createElement('script');
+    script.src = '../_sidebar-toggle.js';
+    script.onload = function(){
+      initializeSidebarToggle(false);
+    };
+    document.head.appendChild(script);
+
+    // 모달 함수 정의 (모달이 로드된 후)
+    window.showDeleteModal = function(title, message, onConfirm) {
+      var modal = document.getElementById('delete-modal');
+      var modalTitle = modal.querySelector('.modal-title');
+      var modalMessage = document.getElementById('delete-modal-message');
+      var confirmBtn = document.getElementById('delete-modal-confirm');
+      var cancelBtn = document.getElementById('delete-modal-cancel');
+
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+      modal.classList.add('active');
+
+      var handleConfirm = function(){
+        modal.classList.remove('active');
+        confirmBtn.removeEventListener('click', handleConfirm);
+        cancelBtn.removeEventListener('click', handleCancel);
+        onConfirm();
+      };
+
+      var handleCancel = function(){
+        modal.classList.remove('active');
+        confirmBtn.removeEventListener('click', handleConfirm);
+        cancelBtn.removeEventListener('click', handleCancel);
+      };
+
+      confirmBtn.addEventListener('click', handleConfirm);
+      cancelBtn.addEventListener('click', handleCancel);
+    };
+
+    window.showManualListModal = function(catName, manuals) {
+      var modal = document.getElementById('manual-list-modal');
+      var title = document.getElementById('manual-list-title');
+      var content = document.getElementById('manual-list-content');
+      var closeBtn = document.getElementById('manual-list-close');
+
+      title.innerHTML = catName + ' <span style="color: var(--sage); font-size: 12px; font-weight: 400;">· ' + manuals.length + '</span>';
+      if (manuals.length === 0) {
+        content.innerHTML = '<div class="manual-list-empty">등록된 매뉴얼이 없습니다</div>';
+      } else {
+        content.innerHTML = manuals.map(function(manual){
+          return '<div class="manual-list-item">' + manual + '</div>';
+        }).join('');
+      }
+      modal.classList.add('active');
+
+      closeBtn.onclick = function(){
+        modal.classList.remove('active');
+      };
+    };
+
+    // 카테고리 로직 초기화
+    initializeCategory();
+  });
+
+  function initializeCategory(){
+    var categoryData = {
+      'cafe-mardi': [
+        { name: '메뉴 관리', count: 1, manuals: ['메뉴판 등록하기'] },
+        { name: '예약', count: 0, manuals: [] },
+        { name: '공지사항', count: 2, manuals: ['공지사항 작성하기', '공지사항 수정하기'] },
+        { name: '갤러리', count: 1, manuals: ['사진 업로드하기'] },
+        { name: '계정·설정', count: 3, manuals: ['계정정보 수정', '비밀번호 변경', '알림설정'] }
+      ]
+    };
+
+    var catList = document.getElementById('category-list');
+    var catNewInput = document.getElementById('cat-new-input');
+    var catAddBtn = document.getElementById('cat-add-btn');
+    var catProjectBtn = document.getElementById('cat-project-btn');
+    var catProjectDropdown = document.getElementById('cat-project-dropdown');
+    var catProjectMenu = document.getElementById('cat-project-menu');
+    var currentProject = 'cafe-mardi';
+
+    function renderCategoryRow(cat){
+      var row = document.createElement('div');
+      row.className = 'category-row';
+      row.innerHTML = '<span class="category-name">' + cat.name + '</span><span class="category-count" style="cursor:pointer;">매뉴얼 ' + cat.count + '개</span><button class="category-remove">삭제</button>';
+
+      row.querySelector('.category-count').addEventListener('click', function(){
+        window.showManualListModal(cat.name, cat.manuals || []);
+      });
+
+      row.querySelector('.category-remove').addEventListener('click', function(){
+        if (cat.count > 0) {
+          window.showDeleteModal('카테고리 삭제 불가', '매뉴얼이 1개라도 있으면 카테고리 삭제할 수 없습니다.\n삭제하려면 매뉴얼을 모두 정리해야 합니다.', null, true);
+        } else {
+          window.showDeleteModal('카테고리 삭제', cat.name + ' 카테고리를 삭제하시겠어요?', function(){
+            row.remove();
+          });
+        }
+      });
+      return row;
+    }
+
+    function renderCategoryList(projectKey){
+      catList.innerHTML = '';
+      (categoryData[projectKey] || []).forEach(function(cat){
+        catList.appendChild(renderCategoryRow(cat));
+      });
+    }
+
+    // 초기 카테고리 렌더링
+    renderCategoryList(currentProject);
+
+    // 프로젝트 드롭다운 처리
+    if (catProjectBtn && catProjectMenu) {
+      catProjectBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        catProjectDropdown.classList.toggle('open');
+      });
+
+      var sortOptions = catProjectMenu.querySelectorAll('.sort-option');
+      sortOptions.forEach(function(opt){
+        opt.addEventListener('click', function(){
+          sortOptions.forEach(function(o){ o.classList.remove('active'); });
+          opt.classList.add('active');
+          currentProject = opt.getAttribute('value');
+          catProjectBtn.textContent = opt.textContent + ' ▾';
+          renderCategoryList(currentProject);
+          catProjectDropdown.classList.remove('open');
+        });
+      });
+    }
+
+    // 드롭다운 외부 클릭 시 닫기
+    document.addEventListener('click', function(){
+      if (catProjectDropdown) catProjectDropdown.classList.remove('open');
+    });
+
+    // 카테고리 추가
+    if (catAddBtn) {
+      catAddBtn.addEventListener('click', function(){
+        var name = catNewInput.value.trim();
+        if (!name) return;
+        catList.appendChild(renderCategoryRow({ name: name, count: 0 }));
+        catNewInput.value = '';
+      });
+    }
+  }
+</script>
+</main>
+</div>
+</body>
+</html>

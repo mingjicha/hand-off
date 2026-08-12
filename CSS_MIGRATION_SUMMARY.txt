@@ -1,0 +1,133 @@
+CSS와 폰트 분리 작업 완료 보고서
+================================
+
+작업 완료 날짜: 2026-07-28
+총 소요 시간: ~5분
+
+## 작업 내용
+
+### 1. 폰트 추출
+- 원본: temp_styles.txt (전체 스타일)
+- 추출: @font-face 규칙 1개
+- 생성: assets/fonts.css (814KB)
+  - SUIT 폰트 1개 (base64 인코딩)
+
+### 2. CSS 분리
+- 공통 스타일: CSS 변수, 색상 스킴, 리셋, 기본 폰트 설정
+  - :root 선언
+  - @media (prefers-color-scheme: dark) 미디어 쿼리
+  - :root[data-theme="dark"] 및 :root[data-theme="light"] 오버라이드
+  - 기본 리셋 (*, body 등)
+
+- Admin CSS (관리자 포탈): 39KB (1465 라인)
+  - App shell (사이드바, 메인 콘텐츠)
+  - 네비게이션 컴포넌트
+  - 대시보드/프로젝트 관리
+  - 팀 관리 UI
+  - 카테고리 관리
+  - 설정 페이지
+  - 테이블 및 리스트 뷰
+  - 매뉴얼 편집기
+  - 인증 화면
+
+- Client CSS (클라이언트 포탈): 30KB (1174 라인)
+  - 클라이언트 포탈 UI
+  - 매뉴얼 읽기 뷰
+  - 티켓 양식
+  - Slack 알림 목업
+  - 요청 CTA
+  - 폼 및 드롭존
+
+### 3. HTML 파일 업데이트
+
+Admin 폴더 (15개 파일):
+✓ admin/auth/invite.html
+✓ admin/auth/login.html
+✓ admin/category/manage.html
+✓ admin/home/index.html
+✓ admin/manual/detail.html
+✓ admin/manual/edit.html
+✓ admin/manual/list.html
+✓ admin/project/detail.html
+✓ admin/project/list.html
+✓ admin/settings/index.html
+✓ admin/team/list.html
+✓ admin/team/member.html
+✓ admin/ticket/attention.html
+✓ admin/ticket/detail.html
+✓ admin/ticket/list.html
+
+Client 폴더 (8개 파일):
+✓ client/account/index.html
+✓ client/manual/detail.html
+✓ client/manual/list.html
+✓ client/portal/index.html
+✓ client/slack/notification.html
+✓ client/ticket/detail.html
+✓ client/ticket/form.html
+✓ client/ticket/list.html
+
+총 23개 HTML 파일 업데이트 완료
+
+### 4. 변경 내용
+
+각 HTML 파일에서:
+- 기존 <style>...</style> 태그 제거
+- 새 스타일시트 링크 추가:
+  - <link rel="stylesheet" href="../../assets/fonts.css">
+  - <link rel="stylesheet" href="../../assets/admin.css"> (admin 폴더)
+  - <link rel="stylesheet" href="../../assets/client.css"> (client 폴더)
+
+## 파일 구조
+
+hand-off/
+├── assets/
+│   ├── fonts.css        (814KB - 폰트만)
+│   ├── admin.css        (39KB - 공통 + 관리자 스타일)
+│   └── client.css       (30KB - 공통 + 클라이언트 스타일)
+├── admin/
+│   ├── auth/
+│   ├── category/
+│   ├── home/
+│   ├── manual/
+│   ├── project/
+│   ├── settings/
+│   ├── team/
+│   └── ticket/
+├── client/
+│   ├── account/
+│   ├── manual/
+│   ├── portal/
+│   ├── slack/
+│   └── ticket/
+├── _shared.html
+├── index.html
+└── CSS_MIGRATION_SUMMARY.txt (이 파일)
+
+## 검증 결과
+
+✓ 모든 <style> 태그 제거 확인 (0개 남음)
+✓ 모든 HTML 파일에 fonts.css 링크 추가
+✓ Admin 폴더: admin.css 링크 추가
+✓ Client 폴더: client.css 링크 추가
+✓ 상대 경로 계산 정확 (각 파일 깊이에 따라 올바른 ../../assets/ 경로 사용)
+
+## 이점
+
+1. 성능 최적화
+   - 클라이언트는 client.css만 로드 (관리자 스타일 제외)
+   - 캐싱 효율성 증대
+
+2. 유지보수 용이성
+   - 각 포탈의 스타일을 독립적으로 관리 가능
+   - 공통 변수 관리 한 곳에서 처리
+
+3. 번들 크기 최소화
+   - 각 포탈이 필요한 CSS만 로드
+   - 폰트는 한 번만 로드
+
+## 추가 고려사항
+
+- 폰트 파일 크기(814KB)가 큼 - 필요시 WOFF2 압축 고려
+- 공통 CSS는 두 파일에 중복됨 - 향후 별도 파일로 분리 가능
+- temp_styles.txt는 작업 완료 후 삭제 가능

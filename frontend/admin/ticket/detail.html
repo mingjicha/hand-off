@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/shared.css">
+<title>핸드오프 — 관리자</title>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="app-sidebar" id="sidebar"></aside>
+  <main class="app-main">
+    <div class="ticket-detail" style="padding:0; margin:0;">
+      <div class="editor-crumb"><span class="nav-link" data-tab="projdetail">카페 마르디 웹사이트</span> / 티켓 #015</div>
+      <div class="td-head">
+        <div>
+          <span class="td-id">#015</span>
+          <div class="td-title-row">
+            <h2>예약 폼에 전화번호 필드 추가</h2>
+          </div>
+        </div>
+        <div class="status-dropdown sort-dropdown" id="ticket-status-dropdown">
+          <button class="status-chip status-chip-btn" id="ticket-status-btn" type="button">
+            <span class="dot dot-progress" id="ticket-status-dot"></span><span id="ticket-status-label">진행중</span> ▾
+          </button>
+          <div class="sort-menu status-menu" id="ticket-status-menu">
+            <button class="sort-option status-option" data-status="open" data-label="접수"><span class="dot dot-open"></span>접수</button>
+            <button class="sort-option status-option active" data-status="progress" data-label="진행중"><span class="dot dot-progress"></span>진행중</button>
+            <button class="sort-option status-option" data-status="review" data-label="확인 요청"><span class="dot dot-review"></span>확인 요청</button>
+            <button class="sort-option status-option" data-status="done" data-label="완료"><span class="dot dot-done"></span>완료</button>
+          </div>
+        </div>
+      </div>
+      <div class="td-props">
+        <div class="td-props-row"><span class="td-props-label">요청자</span><span class="td-props-value">마르디 로스터스</span></div>
+        <div class="td-props-row"><span class="td-props-label">생성 날짜</span><span class="td-props-value">7월 23일</span></div>
+        <div class="td-props-row"><span class="td-props-label">연결 화면</span><span class="td-props-value">예약 페이지</span></div>
+        <div class="td-props-row" id="assignee-row">
+          <span class="td-props-label">담당자</span>
+          <span class="td-props-value" id="assignee-value">-</span>
+        </div>
+      </div>
+      <div class="reopen-note" id="ticket-reopen-note" style="display:none;">
+        완료된 티켓이에요. 같은 문제가 다시 생기면 상태를 바꿔 재오픈할 수 있어요.
+      </div>
+
+      <div class="thread">
+        <div class="msg">
+          <div class="msg-head"><div class="msg-avatar"><img src="../../assets/svg/contents/user-client.svg" alt="클라이언트"></div><span class="msg-author is-client">마르디 로스터스</span><span class="msg-time">7월 23일 14:02</span></div>
+          <p>예약 폼에 이름, 날짜만 있고 전화번호 받는 칸이 없어요. 추가해주실 수 있나요?</p>
+          <p>예약 폼에 이름, 날짜만 있고 전화번호 받는 칸이 없어요. 추가해주실 수 있나요?</p>
+          <p>예약 폼에 이름, 날짜만 있고 전화번호 받는 칸이 없어요. 추가해주실 수 있나요?</p>
+          <p>예약 폼에 이름, 날짜만 있고 전화번호 받는 칸이 없어요. 추가해주실 수 있나요?</p>
+          <p>예약 폼에 이름, 날짜만 있고 전화번호 받는 칸이 없어요. 추가해주실 수 있나요?</p>
+          <p>예약 폼에 이름, 날짜만 있고 전화번호 받는 칸이 없어요. 추가해주실 수 있나요?</p>
+          <p>예약 폼에 이름, 날짜만 있고 전화번호 받는 칸이 없어요. 추가해주실 수 있나요?</p>
+          <p>예약 폼에 이름, 날짜만 있고 전화번호 받는 칸이 없어요. 추가해주실 수 있나요?</p>
+          <p>예약 폼에 이름, 날짜만 있고 전화번호 받는 칸이 없어요. 추가해주실 수 있나요?</p>
+          <p>예약 폼에 이름, 날짜만 있고 전화번호 받는 칸이 없어요. 추가해주실 수 있나요?</p>
+          <p>예약 폼에 이름, 날짜만 있고 전화번호 받는 칸이 없어요. 추가해주실 수 있나요?</p>
+          <p>예약 폼에 이름, 날짜만 있고 전화번호 받는 칸이 없어요. 추가해주실 수 있나요?</p>
+          <div class="msg-attach">
+            <div class="msg-attach-name"><img src="../../assets/svg/contents/image.svg" alt="이미지"> reservation-form.png</div>
+            <div class="shot-capture" style="margin-top:6px;">
+              <div class="shot-capture-bar"><span></span><span></span><span></span></div>
+              <div class="shot-capture-body" style="display:block; padding:16px;">
+                <div style="font-family:var(--font-display); font-size:12px; font-weight:600; margin-bottom:10px;">예약하기</div>
+                <div class="shot-mini-row" style="justify-content:flex-start; gap:8px;"><span style="color:var(--sage);">이름</span><span style="border:1px solid var(--line); border-radius:4px; padding:2px 10px; background:var(--bg-raised); flex:1;">&nbsp;</span></div>
+                <div class="shot-mini-row" style="justify-content:flex-start; gap:8px; position:relative;">
+                  <span style="color:var(--sage);">날짜</span><span style="border:1px solid var(--line); border-radius:4px; padding:2px 10px; background:var(--bg-raised); flex:1;">&nbsp;</span>
+                  <div class="shot-callout-ring" style="top:-4px; left:60px; right:-6px; bottom:-14px; width:auto; height:auto;"></div>
+                </div>
+                <div class="shot-callout-arrow" style="top:38px; left:8px; transform:rotate(90deg);">↑</div>
+                <div class="shot-callout-tag" style="top:56px; left:0; white-space:normal; max-width:220px;">여기에 전화받는 칸 추가해주세요</div>
+                <div style="height:34px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="msg">
+          <div class="msg-head"><div class="msg-avatar"><img src="../../assets/svg/contents/user-dev.svg" alt="개발자"></div><span class="msg-author is-dev">개발자</span><span class="msg-time">7월 23일 16:40</span></div>
+          <p>네 가능합니다. 필수 입력으로 할지, 선택 입력으로 할지만 알려주시면 바로 반영할게요.</p>
+        </div>
+        <div class="msg">
+          <div class="msg-head"><div class="msg-avatar"><img src="../../assets/svg/contents/user-client.svg" alt="클라이언트"></div><span class="msg-author is-client">마르디 로스터스</span><span class="msg-time">7월 24일 09:15</span></div>
+          <p>필수로 해주세요!</p>
+        </div>
+        <div class="msg">
+          <div class="msg-head"><div class="msg-avatar"><img src="../../assets/svg/contents/user-dev.svg" alt="개발자"></div><span class="msg-author is-dev">개발자</span><span class="msg-time">7월 24일 15:20</span></div>
+          <p>완료했습니다. <a href="#">https://cafemardi.com/reservation</a> 에서 전화번호 입력란이 잘 뜨는지 확인해보세요.</p>
+        </div>
+      </div>
+      <div class="reply-box" id="reply-box">
+        <button class="reply-attach-btn" type="button" title="이미지 첨부"><img src="../../assets/svg/contents/paperclip.svg" alt="첨부"></button>
+        <input type="text" placeholder="답장 입력..." disabled />
+        <button class="btn btn-primary">전송</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="../_sidebar-toggle.js"></script>
+<script>
+  fetch('../_sidebar.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('sidebar').innerHTML = html;
+      initializeSidebarToggle(false);
+    });
+</script>
+<script>
+  (function(){
+    var CURRENT_USER_NAME = '차민지';
+
+    var CURRENT_USER_NAME = '차민지';
+    var statusDropdown = document.getElementById('ticket-status-dropdown');
+    var statusBtn = document.getElementById('ticket-status-btn');
+    var statusDot = document.getElementById('ticket-status-dot');
+    var statusLabel = document.getElementById('ticket-status-label');
+    var statusOptions = statusDropdown ? statusDropdown.querySelectorAll('.status-option') : [];
+    var reopenNote = document.getElementById('ticket-reopen-note');
+    var replyBox = document.getElementById('reply-box');
+    var assigneeRow = document.getElementById('assignee-row');
+    var assigneeValue = document.getElementById('assignee-value');
+
+    if (statusBtn) {
+      statusBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        statusDropdown.classList.toggle('open');
+      });
+      statusOptions.forEach(function(opt){
+        opt.addEventListener('click', function(){
+          statusOptions.forEach(function(o){ o.classList.remove('active'); });
+          opt.classList.add('active');
+          var newStatus = opt.dataset.status;
+          statusDot.className = 'dot dot-' + newStatus;
+          statusLabel.textContent = opt.dataset.label;
+          statusDropdown.classList.remove('open');
+
+          if (reopenNote) reopenNote.style.display = newStatus === 'done' ? 'block' : 'none';
+          if (replyBox) replyBox.style.display = newStatus === 'done' ? 'none' : '';
+
+          // 담당자 업데이트
+          if (newStatus === 'open') {
+            assigneeValue.textContent = '-';
+          } else {
+            assigneeValue.textContent = CURRENT_USER_NAME;
+          }
+        });
+      });
+    }
+
+    document.addEventListener('click', function(){
+      if (statusDropdown) statusDropdown.classList.remove('open');
+    });
+  })();
+</script>
+</body>
+</html>

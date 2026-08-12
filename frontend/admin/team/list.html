@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../../assets/shared.css">
+<link rel="stylesheet" href="../layout.html">
+<title>핸드오프 — 관리자</title>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="app-sidebar" id="sidebar"></aside>
+  <main class="app-main">
+<div class="main-head">
+  <div>
+    <h2>팀원 관리</h2>
+    <p>팀원을 초대하고 권한을 관리해요</p>
+  </div>
+  <button class="btn btn-primary" id="team-invite-btn">+ 팀원 초대</button>
+</div>
+
+<div class="team-role-selector" style="margin-bottom:2rem;">
+  <button class="demo-toggle-btn active" data-team-role="admin">관리자</button>
+  <button class="demo-toggle-btn" data-team-role="member">멤버</button>
+  <span id="team-viewer-note" style="display:none;margin-left:1rem;font-size:12px;color:var(--secondary-text);">멤버는 자신이 담당한 프로젝트에서만 전체 정보를 볼 수 있어요</span>
+</div>
+
+<div id="team-view-desc" style="margin-bottom:1rem;font-size:13px;color:var(--secondary-text);">
+  관리자만 모든 정보를 조회할 수 있고 프로젝트를 할당해요
+</div>
+
+<div class="team-member-list">
+  <!-- 팀원이 여기 추가됨 -->
+</div>
+
+<script>
+  fetch('../_sidebar.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('sidebar').innerHTML = html;
+    });
+</script>
+<script>
+  (function(){
+    var teamRoleToggleBtns = document.querySelectorAll('.demo-toggle-btn');
+    var teamViewerNote = document.getElementById('team-viewer-note');
+    var teamViewDesc = document.getElementById('team-view-desc');
+    var teamInviteBtn = document.getElementById('team-invite-btn');
+    var teamMemberRows = document.querySelectorAll('.team-member-row');
+
+    teamRoleToggleBtns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        teamRoleToggleBtns.forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        var isMember = btn.dataset.teamRole === 'member';
+        teamViewerNote.style.display = isMember ? 'block' : 'none';
+        teamInviteBtn.style.display = isMember ? 'none' : '';
+        teamViewDesc.textContent = isMember
+          ? '멤버는 담당한 프로젝트 4개만 담당자와 함께 보여요'
+          : '관리자만 모든 정보를 조회할 수 있고 프로젝트를 할당해요';
+        teamMemberRows.forEach(function(row){
+          var isMe = row.querySelector('.team-me-tag');
+          row.classList.toggle('member-view-locked', isMember && !isMe);
+        });
+      });
+    });
+  })();
+  </script>
+</main>
+</div>
+</body>
+</html>

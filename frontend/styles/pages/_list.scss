@@ -1,0 +1,388 @@
+/* ========================================
+   LIST.HTML - PROJECT LIST PAGE
+   ======================================== */
+
+/* 페이지 헤더 */
+.main-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+/* 헤더 > 제목 (2단계) */
+.main-head h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+}
+
+/* 헤더 > 설명 (2단계) */
+.main-head p {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+/* 뷰 탭 (카드/리스트 전환) */
+.view-tabs {
+  display: flex;
+  gap: 18px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 14px;
+}
+
+/* 탭 > 탭 버튼 (2단계) */
+.view-tabs .view-tab {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 2px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+/* 탭 버튼 > 호버 (2단계) */
+.view-tabs .view-tab:hover {
+  color: var(--ink);
+}
+
+/* 탭 버튼 > 활성 (2단계) */
+.view-tabs .view-tab.active {
+  color: var(--ink);
+  border-bottom-color: var(--dev);
+  font-weight: 600;
+}
+
+/* 대시보드 도구모음 */
+.dash-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+/* 도구모음 > 검색 입력 (2단계) */
+.dash-toolbar .search-input {
+  flex: 1;
+  max-width: 260px;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: var(--bg-raised);
+  font-size: 13px;
+  color: var(--sage);
+}
+
+/* 검색 입력 > 입력 필드 (3단계) */
+.dash-toolbar .search-input input {
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  width: 100%;
+  outline: none;
+}
+
+/* 도구모음 > 정렬 드롭다운 (2단계) */
+.dash-toolbar .sort-dropdown {
+  position: relative;
+}
+
+/* 드롭다운 > 정렬 버튼 (3단계) */
+.dash-toolbar .sort-dropdown .sort-select {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: var(--bg-raised);
+  cursor: pointer;
+}
+
+/* 정렬 버튼 > 호버 (3단계) */
+.dash-toolbar .sort-dropdown .sort-select:hover {
+  border-color: var(--dev);
+  color: var(--ink);
+}
+
+/* 드롭다운 > 정렬 메뉴 (3단계) */
+.dash-toolbar .sort-dropdown .sort-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 10;
+  min-width: 120px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-raised);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  flex-direction: column;
+}
+
+/* 드롭다운 > 메뉴 (열린 상태, 3단계) */
+.dash-toolbar .sort-dropdown.open .sort-menu {
+  display: flex;
+}
+
+/* 메뉴 > 옵션 (3단계) */
+.dash-toolbar .sort-dropdown .sort-menu .sort-option {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  text-align: left;
+  padding: 8px 12px;
+  border: none;
+  background: var(--bg-raised);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+/* 옵션 > 호버 (3단계) */
+.dash-toolbar .sort-dropdown .sort-menu .sort-option:hover {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+#proj-assignee-menu label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--bg-raised);
+  color: var(--ink-soft);
+}
+
+#proj-assignee-menu label:hover {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+#proj-assignee-menu input[type="checkbox"] {
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  accent-color: var(--dev);
+}
+
+/* 옵션 > 활성 (3단계) */
+.dash-toolbar .sort-dropdown .sort-menu .sort-option.active {
+  color: var(--dev);
+  font-weight: 600;
+  background: var(--dev-soft);
+}
+
+/* 도구모음 > 토글 버튼 (2단계) */
+.dash-toolbar .toolbar-toggle-btn {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: var(--bg-raised);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+/* 토글 버튼 > 호버 (2단계) */
+.dash-toolbar .toolbar-toggle-btn:hover {
+  border-color: var(--dev);
+  color: var(--ink);
+}
+
+/* 토글 버튼 > 활성 (2단계) */
+.dash-toolbar .toolbar-toggle-btn.active {
+  background: var(--dev-soft);
+  color: var(--dev);
+  font-weight: 600;
+  border-color: var(--dev);
+}
+
+/* 카드뷰 컨테이너 */
+.proj-grid-scroll {
+  overflow-y: auto;
+}
+
+/* 카드뷰 > 그리드 (2단계) */
+.proj-grid-scroll .proj-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+/* 그리드 > 카드 (3단계) */
+.proj-grid-scroll .proj-grid .proj-card {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px 18px;
+  background: var(--bg-raised);
+}
+
+/* 그리드 > 카드 > 클릭 가능 (3단계) */
+.proj-grid-scroll .proj-grid .proj-card.clickable {
+  cursor: pointer;
+  transition: border-color .15s ease, transform .1s ease, box-shadow .15s ease;
+}
+
+/* 클릭 가능 카드 > 호버 (3단계) */
+.proj-grid-scroll .proj-grid .proj-card.clickable:hover {
+  border-color: var(--dev);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 카드 > 카드 상단 (3단계) */
+.proj-grid-scroll .proj-grid .proj-card .proj-card-top {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* 카드 상단 > 프로젝트명 (3단계) */
+.proj-grid-scroll .proj-grid .proj-card .proj-card-top .p-name {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* 카드 상단 > 클라이언트명 (3단계) */
+.proj-grid-scroll .proj-grid .proj-card .proj-card-top .p-client {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+/* 카드 > 통계 영역 (3단계) */
+.proj-grid-scroll .proj-grid .proj-card .proj-stats {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: var(--sage);
+  flex-wrap: wrap;
+}
+
+/* 통계 > 미해결 배지 (3단계) */
+.proj-grid-scroll .proj-grid .proj-card .proj-stats .badge-open {
+  color: var(--client);
+}
+
+/* 통계 > 담당자 (3단계) */
+.proj-grid-scroll .proj-grid .proj-card .proj-stats .p-assignee {
+  color: var(--dev);
+}
+
+/* 통계 > 숫자 강조 (3단계) */
+.proj-grid-scroll .proj-grid .proj-card .proj-stats b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* 테이블뷰 래퍼 */
+.proj-table-wrap {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-raised);
+  overflow: hidden;
+  width: 100%;
+}
+
+/* 테이블 래퍼 > 스크롤 컨테이너 (2단계) */
+.proj-table-wrap .proj-table-scroll {
+  overflow: auto;
+  display: block;
+}
+
+/* 스크롤 컨테이너 > 테이블 (3단계) */
+.proj-table-wrap .proj-table-scroll .proj-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  table-layout: fixed;
+}
+
+/* 테이블 > 헤더 (3단계) */
+.proj-table-wrap .proj-table-scroll .proj-table thead th {
+  text-align: left;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--sage);
+  font-weight: 500;
+  background: var(--bg-raised);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* 테이블 > 데이터 셀 (3단계) */
+.proj-table-wrap .proj-table-scroll .proj-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+/* 테이블 > 행 클릭 가능 (3단계) */
+.proj-table-wrap .proj-table-scroll .proj-table tr.clickable-row {
+  cursor: pointer;
+}
+
+/* 테이블 > 마지막 행 (3단계) */
+.proj-table-wrap .proj-table-scroll .proj-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* 테이블 > 행 호버 (3단계) */
+.proj-table-wrap .proj-table-scroll .proj-table tr:hover td {
+  background: var(--bg);
+}
+
+/* 데이터 필드 - 프로젝트명 */
+.proj-table-wrap .proj-table-scroll .proj-table .p-name {
+  font-weight: 600;
+  width: 38%;
+}
+
+/* 데이터 필드 - 클라이언트명 */
+.proj-table-wrap .proj-table-scroll .proj-table .p-client {
+  color: var(--ink-soft);
+  width: 25%;
+}
+
+/* 데이터 필드 - 담당자 */
+.proj-table-wrap .proj-table-scroll .proj-table .p-assignee {
+  color: var(--dev);
+  width: 12%;
+}
+
+/* 데이터 필드 - 미해결 */
+.proj-table-wrap .proj-table-scroll .proj-table .p-open {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+/* 미해결 > 미해결 있음 */
+.proj-table-wrap .proj-table-scroll .proj-table .p-open.has-open {
+  color: var(--client);
+  width: 8%;
+}
+
+/* 미해결 > 없음 */
+.proj-table-wrap .proj-table-scroll .proj-table .p-open.none {
+  color: var(--sage);
+  font-weight: 400;
+}
+
+/* 데이터 필드 - 매뉴얼 */
+.proj-table-wrap .proj-table-scroll .proj-table .p-manual {
+  color: var(--ink-soft);
+  width: 8%;
+}
+
+/* 데이터 필드 - 최근 활동 */
+.proj-table-wrap .proj-table-scroll .proj-table .p-updated {
+  color: var(--sage);
+  width: 9%;
+}
